@@ -1,14 +1,29 @@
 package android.os;
 
+import oshi.SystemInfo;
+import oshi.hardware.HardwareAbstractionLayer;
+import oshi.software.os.OperatingSystem;
+
 public class Build {
-    public static final String MODEL = System.getProperty("os.arch");
+    private static final String RELEASE;
+    public static final String OS_NAME;
+    public static final String MODEL;
     public static final String MANUFACTURER = System.getProperty("java.vendor");
     public static final String ID = System.getProperty("java.vm.name") + " (" + System.getProperty("java.vm.version") + ")";
     public static final Versions VERSION = new Versions();
 
+    static {
+        SystemInfo systemInfo = new SystemInfo();
+        OperatingSystem os = systemInfo.getOperatingSystem();
+        HardwareAbstractionLayer hardware = systemInfo.getHardware();
+        OS_NAME = os.getFamily();
+        MODEL = hardware.getProcessor().getProcessorIdentifier().getName();
+        RELEASE = os.getVersionInfo().toString();
+    }
+
     public static class Versions {
         public static final int SDK_INT;
-        public static final String RELEASE = System.getProperty("os.version");
+        public static final String RELEASE = Build.RELEASE;
 
         static {
             int version = 0;

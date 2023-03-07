@@ -36,7 +36,7 @@ public class DeviceInfoHelper {
     /**
      * OS name.
      */
-    private static final String OS_NAME = System.getProperty("os.name");
+    private static final String OS_NAME = Build.OS_NAME;
 
     /**
      * Wrapper SDK information to use when building device properties.

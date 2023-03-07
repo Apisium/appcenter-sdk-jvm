@@ -13,4 +13,5 @@ repositories {
 dependencies {
     implementation 'androidx.annotation:annotation:1.6.0'
     implementation 'org.json:json:20230227'
+    implementation 'com.github.oshi:oshi-core:6.4.0'
 }
