@@ -1,0 +1,16 @@
+plugins {
+    id 'java'
+}
+
+group 'com.microsoft.appcenter'
+version '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+    google()
+}
+
+dependencies {
+    implementation 'androidx.annotation:annotation:1.6.0'
+    implementation 'org.json:json:20230227'
+}
