@@ -49,7 +49,6 @@ import java.util.UUID;
 import java.util.logging.Logger;
 
 //import static android.content.pm.ApplicationInfo.FLAG_DEBUGGABLE;
-import static android.util.Log.VERBOSE;
 import static com.microsoft.appcenter.ApplicationContextUtils.getApplicationContext;
 import static com.microsoft.appcenter.Constants.DEFAULT_TRIGGER_COUNT;
 import static com.microsoft.appcenter.Constants.DEFAULT_TRIGGER_INTERVAL;

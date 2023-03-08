@@ -5,6 +5,7 @@
 
 package com.microsoft.appcenter.utils;
 
+import static android.util.Log.ERROR;
 import static android.util.Log.VERBOSE;
 
 import android.util.Log;
@@ -39,7 +40,7 @@ public class AppCenterLog {
     /**
      * Current log level.
      */
-    private static int sLogLevel = VERBOSE;
+    private static int sLogLevel = ERROR;
 
     /**
      * Custom logger.

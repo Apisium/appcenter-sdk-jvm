@@ -17,6 +17,8 @@ package android.util;
 //import org.jetbrains.annotations.IntDef;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 //import org.jetbrains.annotations.SystemApi;
 //import android.compat.annotation.UnsupportedAppUsage;
 //import android.os.DeadSystemException;
@@ -67,6 +69,7 @@ import java.net.UnknownHostException;
  * a positive value may be considered as a successful invocation.
  */
 public final class Log {
+    public static final Logger LOGGER = LoggerFactory.getLogger(Log.class);
     /** @hide */
 //    @IntDef({ASSERT, ERROR, WARN, INFO, DEBUG, VERBOSE})
     @Retention(RetentionPolicy.SOURCE)
@@ -379,7 +382,15 @@ public final class Log {
      */
 //    @UnsupportedAppUsage
     public static int println_native(int bufID, int priority, String tag, String msg) {
-        System.out.printf("[%s] %s\n", tag, msg);
+        org.slf4j.event.Level level;
+        switch (priority) {
+            case 0: case 1: case VERBOSE: level = org.slf4j.event.Level.TRACE; break;
+            case DEBUG: level = org.slf4j.event.Level.DEBUG; break;
+            case INFO: level = org.slf4j.event.Level.INFO; break;
+            case WARN: level = org.slf4j.event.Level.WARN; break;
+            default: level = org.slf4j.event.Level.ERROR;
+        }
+        LOGGER.atLevel(level).log("[%s] %s", tag, msg);
         return 1;
     }
     /**
