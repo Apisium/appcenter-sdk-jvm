@@ -26,7 +26,7 @@ import com.microsoft.appcenter.crashes.model.TestCrashException;
 
 public class Main {
     public static void main(String[] args) throws InterruptedException {
-        Application app = Application.getApplication(Main.class.getPackageName(), 1, "1.0.0");
+        Application app = Application.getApplication(Main.class.getPackage().getName(), 1, "1.0.0");
         AppCenter.start(app, "YOUR APP SECRET", Crashes.class, Analytics.class);
         app.start();
 
