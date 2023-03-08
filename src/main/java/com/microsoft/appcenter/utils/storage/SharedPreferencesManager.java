@@ -14,7 +14,7 @@ public class SharedPreferencesManager {
 
     static {
         JSONObject obj;
-        try(FileInputStream is = new FileInputStream(System.getProperty("com.microsoft.appcenter.preferences", ".appcenter-preferences.json"))) {
+        try(FileInputStream is = new FileInputStream(getPreferencesPath())) {
             JSONTokener tokener = new JSONTokener(is);
             obj = new JSONObject(tokener);
         } catch (Throwable ignored) {

@@ -17,7 +17,9 @@ class UncaughtExceptionHandler implements Thread.UncaughtExceptionHandler {
 
     @Override
     public void uncaughtException(Thread thread, Throwable exception) {
-        Crashes.getInstance().saveUncaughtException(thread, exception);
+        if (System.getProperty("com.microsoft.appcenter.crashes.uncaughtexception.autosend", "").equals("true")) {
+            Crashes.trackCrash(exception, thread, null);
+        } else Crashes.getInstance().saveUncaughtException(thread, exception);
         if (mDefaultUncaughtExceptionHandler != null) {
             mDefaultUncaughtExceptionHandler.uncaughtException(thread, exception);
         } else {

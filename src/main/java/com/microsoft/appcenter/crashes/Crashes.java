@@ -1298,4 +1298,33 @@ public class Crashes extends AbstractAppCenterService {
             this.report = report;
         }
     }
+
+    // ------------------ EXTRA ------------------
+    /**
+     * Track a handled error with name and optional properties and attachments.
+     * The name parameter can not be null or empty. Maximum allowed length = 256.
+     * The properties parameter maximum item count = 5.
+     * The properties keys can not be null or empty, maximum allowed key length = 64.
+     * The properties values can not be null, maximum allowed value length = 64.
+     * Any length of name/keys/values that are longer than each limit will be truncated.
+     *
+     * @param throwable   The throwable describing the handled error.
+     * @param thread  Thread.
+     * @param attachments Optional attachments.
+     */
+    public static void trackCrash(@NotNull Throwable throwable, @NotNull Thread thread, @Nullable Iterable<ErrorAttachmentLog> attachments) {
+        getInstance().queueCrash(throwable, thread, attachments);
+    }
+    private synchronized void queueCrash(@NotNull final Throwable throwable, Thread thread, Iterable<ErrorAttachmentLog> attachments) {
+        final UUID errorId = UUID.randomUUID();
+        ManagedErrorLog errorLog = ErrorLogHelper.createErrorLog(mContext, thread,
+                ErrorLogHelper.getModelExceptionFromThrowable(throwable), Thread.getAllStackTraces(), mInitializeTimestamp, true);
+        post(() -> {
+            /* First send the handled error. */
+            mChannel.enqueue(errorLog, ERROR_GROUP, Flags.CRITICAL);
+
+            /* Then attachments if any. */
+            if (attachments != null) sendErrorAttachment(errorId, attachments);
+        });
+    }
 }

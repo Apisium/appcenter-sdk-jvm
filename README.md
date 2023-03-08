@@ -39,6 +39,15 @@ public class Main {
 }
 ```
 
+## Properties
+
+| Property                                                   | Default Value               |
+|------------------------------------------------------------|-----------------------------|
+| com.microsoft.appcenter.preferences                        | .appcenter-preferences.json |
+| com.microsoft.appcenter.debug                              | false                       |
+| com.microsoft.appcenter.loglevel                           | 6                           |
+| com.microsoft.appcenter.crashes.uncaughtexception.autosend | false                       |
+
 ## Author
 
 Shirasawa
