@@ -418,10 +418,10 @@ public class Crashes extends AbstractAppCenterService {
     }
 
 
-//    @Override
-//    protected synchronized void applyEnabledState(boolean enabled) {
-//        initialize();
-//        if (enabled) {
+    @Override
+    protected synchronized void applyEnabledState(boolean enabled) {
+        initialize();
+        if (enabled) {
 //            mMemoryWarningListener = new ComponentCallbacks2() {
 //
 //                @Override
@@ -439,28 +439,28 @@ public class Crashes extends AbstractAppCenterService {
 //                }
 //            };
 //            mContext.registerComponentCallbacks(mMemoryWarningListener);
-//        } else {
-//
-//            /* Delete all files. */
-//            File[] files = ErrorLogHelper.getErrorStorageDirectory().listFiles();
-//            if (files != null) {
-//                for (File file : files) {
-//                    AppCenterLog.debug(LOG_TAG, "Deleting file " + file);
-//                    if (!file.delete()) {
-//                        AppCenterLog.warn(LOG_TAG, "Failed to delete file " + file);
-//                    }
-//                }
-//            }
-//            AppCenterLog.info(LOG_TAG, "Deleted crashes local files");
-//
-//            /* Delete cache and in memory last session report. */
-//            mErrorReportCache.clear();
-//            mLastSessionErrorReport = null;
+        } else {
+
+            /* Delete all files. */
+            File[] files = ErrorLogHelper.getErrorStorageDirectory().listFiles();
+            if (files != null) {
+                for (File file : files) {
+                    AppCenterLog.debug(LOG_TAG, "Deleting file " + file);
+                    if (!file.delete()) {
+                        AppCenterLog.warn(LOG_TAG, "Failed to delete file " + file);
+                    }
+                }
+            }
+            AppCenterLog.info(LOG_TAG, "Deleted crashes local files");
+
+            /* Delete cache and in memory last session report. */
+            mErrorReportCache.clear();
+            mLastSessionErrorReport = null;
 //            mContext.unregisterComponentCallbacks(mMemoryWarningListener);
 //            mMemoryWarningListener = null;
-//            SharedPreferencesManager.remove(PREF_KEY_MEMORY_RUNNING_LEVEL);
-//        }
-//    }
+            SharedPreferencesManager.remove(PREF_KEY_MEMORY_RUNNING_LEVEL);
+        }
+    }
 
     @Override
     public synchronized void onStarted(@NotNull Context context, @NotNull Channel channel, String appSecret, String transmissionTargetToken, boolean startedFromApp) {
