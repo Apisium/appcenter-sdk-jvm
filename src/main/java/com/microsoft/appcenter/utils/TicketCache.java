@@ -5,7 +5,7 @@
 
 package com.microsoft.appcenter.utils;
 
-import androidx.annotation.VisibleForTesting;
+import org.jetbrains.annotations.VisibleForTesting;
 
 import java.util.HashMap;
 import java.util.Map;

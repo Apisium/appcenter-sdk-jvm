@@ -5,7 +5,7 @@
 
 package com.microsoft.appcenter.ingestion.models.json;
 
-import androidx.annotation.NonNull;
+import org.jetbrains.annotations.NotNull;
 
 import com.microsoft.appcenter.ingestion.models.Log;
 import com.microsoft.appcenter.ingestion.models.LogContainer;
@@ -30,7 +30,7 @@ public class DefaultLogSerializer implements LogSerializer {
 
     private final Map<String, LogFactory> mLogFactories = new HashMap<>();
 
-    @NonNull
+    @NotNull
     private JSONStringer writeLog(JSONStringer writer, Log log) throws JSONException {
         writer.object();
         log.write(writer);
@@ -38,7 +38,7 @@ public class DefaultLogSerializer implements LogSerializer {
         return writer;
     }
 
-    @NonNull
+    @NotNull
     private Log readLog(JSONObject object, String type) throws JSONException {
         if (type == null) {
             type = object.getString(TYPE);
@@ -52,26 +52,26 @@ public class DefaultLogSerializer implements LogSerializer {
         return log;
     }
 
-    @NonNull
+    @NotNull
     @Override
-    public String serializeLog(@NonNull Log log) throws JSONException {
+    public String serializeLog(@NotNull Log log) throws JSONException {
         return writeLog(new JSONStringer(), log).toString();
     }
 
-    @NonNull
+    @NotNull
     @Override
-    public Log deserializeLog(@NonNull String json, String type) throws JSONException {
+    public Log deserializeLog(@NotNull String json, String type) throws JSONException {
         return readLog(new JSONObject(json), type);
     }
 
     @Override
-    public Collection<CommonSchemaLog> toCommonSchemaLog(@NonNull Log log) {
+    public Collection<CommonSchemaLog> toCommonSchemaLog(@NotNull Log log) {
         return mLogFactories.get(log.getType()).toCommonSchemaLogs(log);
     }
 
-    @NonNull
+    @NotNull
     @Override
-    public String serializeContainer(@NonNull LogContainer logContainer) throws JSONException {
+    public String serializeContainer(@NotNull LogContainer logContainer) throws JSONException {
 
         /* Init JSON serializer. */
         JSONStringer writer = new JSONStringer();
@@ -87,9 +87,9 @@ public class DefaultLogSerializer implements LogSerializer {
         return writer.toString();
     }
 
-    @NonNull
+    @NotNull
     @Override
-    public LogContainer deserializeContainer(@NonNull String json, String type) throws JSONException {
+    public LogContainer deserializeContainer(@NotNull String json, String type) throws JSONException {
         JSONObject jContainer = new JSONObject(json);
         LogContainer container = new LogContainer();
         JSONArray jLogs = jContainer.getJSONArray(LOGS);
@@ -104,7 +104,7 @@ public class DefaultLogSerializer implements LogSerializer {
     }
 
     @Override
-    public void addLogFactory(@NonNull String logType, @NonNull LogFactory logFactory) {
+    public void addLogFactory(@NotNull String logType, @NotNull LogFactory logFactory) {
         mLogFactories.put(logType, logFactory);
     }
 }

@@ -8,9 +8,9 @@ package com.microsoft.appcenter.analytics;
 //import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
-import androidx.annotation.NonNull;
-import androidx.annotation.VisibleForTesting;
-import androidx.annotation.WorkerThread;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.VisibleForTesting;
+//import org.jetbrains.annotations.WorkerThread;
 
 import com.microsoft.appcenter.AbstractAppCenterService;
 import com.microsoft.appcenter.AppCenter;
@@ -651,7 +651,7 @@ public class Analytics extends AbstractAppCenterService {
      *
      * @param activity current activity.
      */
-    @WorkerThread
+//    @WorkerThread
     private void processOnResume(Activity activity) {
         if (mSessionTracker != null) {
             mSessionTracker.onActivityResumed();
@@ -749,7 +749,7 @@ public class Analytics extends AbstractAppCenterService {
     /**
      * Start features at app level, this is not done if only libraries started the service.
      */
-    @WorkerThread
+//    @WorkerThread
     private void startAppLevelFeatures() {
 
         /* Share the started from app check between all calls. */
@@ -808,7 +808,7 @@ public class Analytics extends AbstractAppCenterService {
     /**
      * Enqueue page log now.
      */
-    @WorkerThread
+//    @WorkerThread
     private void queuePage(String name, Map<String, String> properties) {
         PageLog pageLog = new PageLog();
         pageLog.setName(name);
@@ -935,7 +935,7 @@ public class Analytics extends AbstractAppCenterService {
     }
 
     @Override
-    public synchronized void onStarted(@NonNull Context context, @NonNull Channel channel, String appSecret, String transmissionTargetToken, boolean startedFromApp) {
+    public synchronized void onStarted(@NotNull Context context, @NotNull Channel channel, String appSecret, String transmissionTargetToken, boolean startedFromApp) {
         mContext = context;
         mStartedFromApp = startedFromApp;
         super.onStarted(context, channel, appSecret, transmissionTargetToken, startedFromApp);
@@ -952,7 +952,7 @@ public class Analytics extends AbstractAppCenterService {
     /**
      * Set a default transmission target if a token has been provided.
      */
-    @WorkerThread
+//    @WorkerThread
     private void setDefaultTransmissionTarget(String transmissionTargetToken) {
         if (transmissionTargetToken != null) {
             mDefaultTransmissionTarget = createAnalyticsTransmissionTarget(transmissionTargetToken);

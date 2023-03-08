@@ -5,8 +5,8 @@
 
 package com.microsoft.appcenter.ingestion;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.VisibleForTesting;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.VisibleForTesting;
 
 import com.microsoft.appcenter.http.AbstractAppCallTemplate;
 import com.microsoft.appcenter.http.HttpClient;
@@ -59,7 +59,7 @@ public class AppCenterIngestion extends AbstractAppCenterIngestion {
      * @param httpClient    the HTTP client instance.
      * @param logSerializer log serializer.
      */
-    public AppCenterIngestion(@NonNull HttpClient httpClient, @NonNull LogSerializer logSerializer) {
+    public AppCenterIngestion(@NotNull HttpClient httpClient, @NotNull LogSerializer logSerializer) {
         super(httpClient, DEFAULT_LOG_URL);
         mLogSerializer = logSerializer;
     }

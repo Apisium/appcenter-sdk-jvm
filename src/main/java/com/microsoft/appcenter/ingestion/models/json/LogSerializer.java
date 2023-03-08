@@ -5,7 +5,7 @@
 
 package com.microsoft.appcenter.ingestion.models.json;
 
-import androidx.annotation.NonNull;
+import org.jetbrains.annotations.NotNull;
 
 import com.microsoft.appcenter.ingestion.models.Log;
 import com.microsoft.appcenter.ingestion.models.LogContainer;
@@ -17,19 +17,19 @@ import java.util.Collection;
 
 public interface LogSerializer {
 
-    @NonNull
-    String serializeLog(@NonNull Log log) throws JSONException;
+    @NotNull
+    String serializeLog(@NotNull Log log) throws JSONException;
 
-    @NonNull
-    Log deserializeLog(@NonNull String json, String type) throws JSONException;
+    @NotNull
+    Log deserializeLog(@NotNull String json, String type) throws JSONException;
 
-    Collection<CommonSchemaLog> toCommonSchemaLog(@NonNull Log log);
+    Collection<CommonSchemaLog> toCommonSchemaLog(@NotNull Log log);
 
-    @NonNull
-    String serializeContainer(@NonNull LogContainer container) throws JSONException;
+    @NotNull
+    String serializeContainer(@NotNull LogContainer container) throws JSONException;
 
-    @NonNull
-    LogContainer deserializeContainer(@NonNull String json, String type) throws JSONException;
+    @NotNull
+    LogContainer deserializeContainer(@NotNull String json, String type) throws JSONException;
 
-    void addLogFactory(@NonNull String logType, @NonNull LogFactory logFactory);
+    void addLogFactory(@NotNull String logType, @NotNull LogFactory logFactory);
 }

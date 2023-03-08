@@ -7,10 +7,10 @@ package com.microsoft.appcenter.channel;
 
 import android.content.Context;
 import android.os.Handler;
-import androidx.annotation.MainThread;
-import androidx.annotation.NonNull;
-import androidx.annotation.VisibleForTesting;
-import androidx.annotation.WorkerThread;
+//import org.jetbrains.annotations.MainThread;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.VisibleForTesting;
+//import org.jetbrains.annotations.WorkerThread;
 
 import com.microsoft.appcenter.CancellationException;
 import com.microsoft.appcenter.http.HttpClient;
@@ -144,7 +144,7 @@ public class DefaultChannel implements Channel {
      * @param httpClient       The HTTP client instance.
      * @param appCenterHandler App Center looper thread handler.
      */
-    public DefaultChannel(@NonNull Context context, String appSecret, @NonNull LogSerializer logSerializer, @NonNull HttpClient httpClient, @NonNull Handler appCenterHandler) {
+    public DefaultChannel(@NotNull Context context, String appSecret, @NotNull LogSerializer logSerializer, @NotNull HttpClient httpClient, @NotNull Handler appCenterHandler) {
         this(context, appSecret, buildDefaultPersistence(context, logSerializer), new AppCenterIngestion(httpClient, logSerializer), appCenterHandler);
     }
 
@@ -158,7 +158,7 @@ public class DefaultChannel implements Channel {
      * @param appCenterHandler App Center looper thread handler.
      */
     @VisibleForTesting
-    DefaultChannel(@NonNull Context context, String appSecret, @NonNull Persistence persistence, @NonNull Ingestion ingestion, @NonNull Handler appCenterHandler) {
+    DefaultChannel(@NotNull Context context, String appSecret, @NotNull Persistence persistence, @NotNull Ingestion ingestion, @NotNull Handler appCenterHandler) {
         mContext = context;
         mAppSecret = appSecret;
         mInstallId = IdHelper.getInstallId();
@@ -175,13 +175,13 @@ public class DefaultChannel implements Channel {
     /**
      * Init Persistence for default constructor.
      */
-    private static Persistence buildDefaultPersistence(@NonNull Context context, @NonNull LogSerializer logSerializer) {
+    private static Persistence buildDefaultPersistence(@NotNull Context context, @NotNull LogSerializer logSerializer) {
         Persistence persistence = new MemoryPersistence();
         persistence.setLogSerializer(logSerializer);
         return persistence;
     }
 
-    @WorkerThread
+//    @WorkerThread
     @Override
     public boolean setMaxStorageSize(long maxStorageSizeInBytes) {
         return mPersistence.setMaxStorageSize(maxStorageSizeInBytes);
@@ -201,9 +201,9 @@ public class DefaultChannel implements Channel {
         return stateSnapshot == mCurrentState && groupState == mGroupStates.get(groupState.mName);
     }
 
-    @WorkerThread
+//    @WorkerThread
     @Override
-    public void setAppSecret(@NonNull String appSecret) {
+    public void setAppSecret(@NotNull String appSecret) {
 
         /* Set app secret. */
         mAppSecret = appSecret;
@@ -458,7 +458,7 @@ public class DefaultChannel implements Channel {
      *
      * @param groupState the group state.
      */
-    private void triggerIngestion(final @NonNull GroupState groupState) {
+    private void triggerIngestion(final @NotNull GroupState groupState) {
         if (!mEnabled) {
             return;
         }
@@ -510,7 +510,7 @@ public class DefaultChannel implements Channel {
      * @param batch        The log batch.
      * @param batchId      The batch ID.
      */
-    @MainThread
+//    @MainThread
     private void sendLogs(final GroupState groupState, final int currentState, List<Log> batch, final String batchId) {
 
         /* Send logs. */
@@ -551,7 +551,7 @@ public class DefaultChannel implements Channel {
         });
     }
 
-    private void checkPendingLogsAfterPost(@NonNull final GroupState groupState, int currentState) {
+    private void checkPendingLogsAfterPost(@NotNull final GroupState groupState, int currentState) {
         if (checkStateDidNotChange(groupState, currentState)) {
             checkPendingLogs(groupState);
         }
@@ -563,7 +563,7 @@ public class DefaultChannel implements Channel {
      * @param groupState The group state.
      * @param batchId    The batch ID.
      */
-    private void handleSendingSuccess(@NonNull GroupState groupState, @NonNull String batchId) {
+    private void handleSendingSuccess(@NotNull GroupState groupState, @NotNull String batchId) {
         List<Log> removedLogsForBatchId = groupState.mSendingBatches.remove(batchId);
         if (removedLogsForBatchId != null) {
             mPersistence.deleteLogs(groupState.mName, batchId);
@@ -586,7 +586,7 @@ public class DefaultChannel implements Channel {
      * @param batchId    the batch ID
      * @param e          the exception
      */
-    private void handleSendingFailure(@NonNull GroupState groupState, @NonNull String batchId, @NonNull Exception e) {
+    private void handleSendingFailure(@NotNull GroupState groupState, @NotNull String batchId, @NotNull Exception e) {
         String groupName = groupState.mName;
         List<Log> removedLogsForBatchId = groupState.mSendingBatches.remove(batchId);
         if (removedLogsForBatchId != null) {
@@ -608,7 +608,7 @@ public class DefaultChannel implements Channel {
     }
 
     @Override
-    public void enqueue(@NonNull Log log, @NonNull final String groupName, int flags) {
+    public void enqueue(@NotNull Log log, @NotNull final String groupName, int flags) {
 
         /* Check group name is registered. */
         GroupState groupState = mGroupStates.get(groupName);
@@ -713,7 +713,7 @@ public class DefaultChannel implements Channel {
      * @param groupState the group state.
      */
     @VisibleForTesting
-    void checkPendingLogs(@NonNull GroupState groupState) {
+    void checkPendingLogs(@NotNull GroupState groupState) {
         AppCenterLog.debug(LOG_TAG, String.format("checkPendingLogs(%s) pendingLogCount=%s batchTimeInterval=%s",
                 groupState.mName, groupState.mPendingLogCount, groupState.mBatchTimeInterval));
         Long batchTimeInterval = resolveTriggerInterval(groupState);
@@ -741,8 +741,8 @@ public class DefaultChannel implements Channel {
      * @param groupState The group state.
      * @return Remaining interval to trigger ingestion. <code>null</code> if there is no need to trigger at all.
      */
-    @WorkerThread
-    private Long resolveTriggerInterval(@NonNull GroupState groupState) {
+//    @WorkerThread
+    private Long resolveTriggerInterval(@NotNull GroupState groupState) {
 
         /* If the interval is custom. */
         if (groupState.mBatchTimeInterval > MINIMUM_TRANSMISSION_INTERVAL) {
@@ -752,8 +752,8 @@ public class DefaultChannel implements Channel {
         }
     }
 
-    @WorkerThread
-    private Long resolveCustomTriggerInterval(@NonNull GroupState groupState) {
+//    @WorkerThread
+    private Long resolveCustomTriggerInterval(@NotNull GroupState groupState) {
         long now = System.currentTimeMillis();
         long startTimer = SharedPreferencesManager.getLong(START_TIMER_PREFIX + groupState.mName);
         if (groupState.mPendingLogCount > 0) {
@@ -778,7 +778,7 @@ public class DefaultChannel implements Channel {
         }
     }
 
-    private Long resolveDefaultTriggerInterval(@NonNull GroupState groupState) {
+    private Long resolveDefaultTriggerInterval(@NotNull GroupState groupState) {
         if (groupState.mPendingLogCount >= groupState.mMaxLogsPerBatch) {
             return 0L;
         }

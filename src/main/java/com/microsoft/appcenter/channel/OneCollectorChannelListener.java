@@ -5,8 +5,8 @@
 
 package com.microsoft.appcenter.channel;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.VisibleForTesting;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.VisibleForTesting;
 
 import com.microsoft.appcenter.http.HttpClient;
 import com.microsoft.appcenter.ingestion.Ingestion;
@@ -80,12 +80,12 @@ public class OneCollectorChannelListener extends AbstractChannelListener {
      * @param httpClient    the HTTP client.
      * @param installId     installId.
      */
-    public OneCollectorChannelListener(@NonNull Channel channel, @NonNull LogSerializer logSerializer, @NonNull HttpClient httpClient, @NonNull UUID installId) {
+    public OneCollectorChannelListener(@NotNull Channel channel, @NotNull LogSerializer logSerializer, @NotNull HttpClient httpClient, @NotNull UUID installId) {
         this(new OneCollectorIngestion(httpClient, logSerializer), channel, logSerializer, installId);
     }
 
     @VisibleForTesting
-    OneCollectorChannelListener(@NonNull OneCollectorIngestion ingestion, @NonNull Channel channel, @NonNull LogSerializer logSerializer, @NonNull UUID installId) {
+    OneCollectorChannelListener(@NotNull OneCollectorIngestion ingestion, @NotNull Channel channel, @NotNull LogSerializer logSerializer, @NotNull UUID installId) {
         mChannel = channel;
         mLogSerializer = logSerializer;
         mInstallId = installId;
@@ -97,12 +97,12 @@ public class OneCollectorChannelListener extends AbstractChannelListener {
      *
      * @param logUrl log URL.
      */
-    public void setLogUrl(@NonNull String logUrl) {
+    public void setLogUrl(@NotNull String logUrl) {
         mIngestion.setLogUrl(logUrl);
     }
 
     @Override
-    public void onGroupAdded(@NonNull String groupName, Channel.GroupListener groupListener, long batchTimeInterval) {
+    public void onGroupAdded(@NotNull String groupName, Channel.GroupListener groupListener, long batchTimeInterval) {
         if (isOneCollectorGroup(groupName)) {
             return;
         }
@@ -111,7 +111,7 @@ public class OneCollectorChannelListener extends AbstractChannelListener {
     }
 
     @Override
-    public void onGroupRemoved(@NonNull String groupName) {
+    public void onGroupRemoved(@NotNull String groupName) {
         if (isOneCollectorGroup(groupName)) {
             return;
         }
@@ -120,7 +120,7 @@ public class OneCollectorChannelListener extends AbstractChannelListener {
     }
 
     @Override
-    public void onPreparedLog(@NonNull Log log, @NonNull String groupName, int flags) {
+    public void onPreparedLog(@NotNull Log log, @NotNull String groupName, int flags) {
 
         /* Nothing to do on common schema log prepared. */
         if (!isOneCollectorCompatible(log)) {
@@ -162,7 +162,7 @@ public class OneCollectorChannelListener extends AbstractChannelListener {
     }
 
     @Override
-    public boolean shouldFilter(@NonNull Log log) {
+    public boolean shouldFilter(@NotNull Log log) {
 
         /* Don't send the logs to AppCenter if it is being sent to OneCollector. */
         return isOneCollectorCompatible(log);
@@ -174,12 +174,12 @@ public class OneCollectorChannelListener extends AbstractChannelListener {
      * @param groupName The group name.
      * @return The One Collector's group name.
      */
-    private static String getOneCollectorGroupName(@NonNull String groupName) {
+    private static String getOneCollectorGroupName(@NotNull String groupName) {
         return groupName + ONE_COLLECTOR_GROUP_NAME_SUFFIX;
     }
 
     @Override
-    public void onClear(@NonNull String groupName) {
+    public void onClear(@NotNull String groupName) {
         if (isOneCollectorGroup(groupName)) {
             return;
         }
@@ -187,7 +187,7 @@ public class OneCollectorChannelListener extends AbstractChannelListener {
     }
 
     @Override
-    public void onPaused(@NonNull String groupName, String targetToken) {
+    public void onPaused(@NotNull String groupName, String targetToken) {
         if (isOneCollectorGroup(groupName)) {
             return;
         }
@@ -195,7 +195,7 @@ public class OneCollectorChannelListener extends AbstractChannelListener {
     }
 
     @Override
-    public void onResumed(@NonNull String groupName, String targetToken) {
+    public void onResumed(@NotNull String groupName, String targetToken) {
         if (isOneCollectorGroup(groupName)) {
             return;
         }
@@ -208,7 +208,7 @@ public class OneCollectorChannelListener extends AbstractChannelListener {
      * @param groupName The group name.
      * @return true if group has One Collector's postfix, false otherwise.
      */
-    private static boolean isOneCollectorGroup(@NonNull String groupName) {
+    private static boolean isOneCollectorGroup(@NotNull String groupName) {
         return groupName.endsWith(ONE_COLLECTOR_GROUP_NAME_SUFFIX);
     }
 
@@ -218,7 +218,7 @@ public class OneCollectorChannelListener extends AbstractChannelListener {
      * @param log The log.
      * @return true if the log is compatible with One Collector, false otherwise.
      */
-    private static boolean isOneCollectorCompatible(@NonNull Log log) {
+    private static boolean isOneCollectorCompatible(@NotNull Log log) {
         return !(log instanceof CommonSchemaLog) && !log.getTransmissionTargetTokens().isEmpty();
     }
 

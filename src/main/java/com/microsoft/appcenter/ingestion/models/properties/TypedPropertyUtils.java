@@ -5,7 +5,7 @@
 
 package com.microsoft.appcenter.ingestion.models.properties;
 
-import androidx.annotation.NonNull;
+import org.jetbrains.annotations.NotNull;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -20,7 +20,7 @@ import static com.microsoft.appcenter.ingestion.models.CommonProperties.TYPED_PR
 public class TypedPropertyUtils {
 
     @SuppressWarnings("IfCanBeSwitch")
-    public static TypedProperty create(@NonNull String type) throws JSONException {
+    public static TypedProperty create(@NotNull String type) throws JSONException {
         if (BooleanTypedProperty.TYPE.equals(type)) {
             return new BooleanTypedProperty();
         } else if (DateTimeTypedProperty.TYPE.equals(type)) {

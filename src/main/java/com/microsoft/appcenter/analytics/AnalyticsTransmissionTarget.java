@@ -6,9 +6,9 @@
 package com.microsoft.appcenter.analytics;
 
 import android.content.Context;
-import androidx.annotation.NonNull;
-import androidx.annotation.VisibleForTesting;
-import androidx.annotation.WorkerThread;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.VisibleForTesting;
+//import org.jetbrains.annotations.WorkerThread;
 
 import com.microsoft.appcenter.AppCenter;
 import com.microsoft.appcenter.Flags;
@@ -78,13 +78,13 @@ public class AnalyticsTransmissionTarget {
      * @param transmissionTargetToken The token for this transmission target.
      * @param parentTarget            Parent transmission target.
      */
-    AnalyticsTransmissionTarget(@NonNull String transmissionTargetToken, final AnalyticsTransmissionTarget parentTarget) {
+    AnalyticsTransmissionTarget(@NotNull String transmissionTargetToken, final AnalyticsTransmissionTarget parentTarget) {
         mTransmissionTargetToken = transmissionTargetToken;
         mParentTarget = parentTarget;
         mPropertyConfigurator = new PropertyConfigurator(this);
     }
 
-    @WorkerThread
+//    @WorkerThread
     void initInBackground(Context context, Channel channel) {
         mContext = context;
         mChannel = channel;
@@ -407,7 +407,7 @@ public class AnalyticsTransmissionTarget {
         return new AbstractChannelListener() {
 
             @Override
-            public void onPreparingLog(@NonNull Log log, @NonNull String groupName) {
+            public void onPreparingLog(@NotNull Log log, @NotNull String groupName) {
                 addTicketToLog(log);
             }
         };
@@ -416,7 +416,7 @@ public class AnalyticsTransmissionTarget {
     /**
      * Add ticket to common schema logs.
      */
-    private static void addTicketToLog(@NonNull Log log) {
+    private static void addTicketToLog(@NotNull Log log) {
 
         /* Decorate only common schema logs when an authentication provider was registered. */
         if (sAuthenticationProvider != null && log instanceof CommonSchemaLog) {
@@ -435,17 +435,17 @@ public class AnalyticsTransmissionTarget {
         }
     }
 
-    @NonNull
+    @NotNull
     private String getEnabledPreferenceKey() {
         return Analytics.getInstance().getEnabledPreferenceKeyPrefix() + PartAUtils.getTargetKey(mTransmissionTargetToken);
     }
 
-    @WorkerThread
+//    @WorkerThread
     private boolean isEnabledInStorage() {
         return SharedPreferencesManager.getBoolean(getEnabledPreferenceKey(), true);
     }
 
-    @WorkerThread
+//    @WorkerThread
     private boolean areAncestorsEnabled() {
         for (AnalyticsTransmissionTarget target = mParentTarget; target != null; target = target.mParentTarget) {
             if (!target.isEnabledInStorage()) {
@@ -455,7 +455,7 @@ public class AnalyticsTransmissionTarget {
         return true;
     }
 
-    @WorkerThread
+//    @WorkerThread
     boolean isEnabled() {
         return areAncestorsEnabled() && isEnabledInStorage();
     }

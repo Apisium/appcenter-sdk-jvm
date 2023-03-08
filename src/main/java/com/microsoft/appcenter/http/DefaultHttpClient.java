@@ -6,7 +6,7 @@
 package com.microsoft.appcenter.http;
 
 import android.os.AsyncTask;
-import androidx.annotation.VisibleForTesting;
+import org.jetbrains.annotations.VisibleForTesting;
 
 import com.microsoft.appcenter.utils.AppCenterLog;
 import com.microsoft.appcenter.utils.HandlerUtils;

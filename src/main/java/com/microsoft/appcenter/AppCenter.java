@@ -12,9 +12,9 @@ import android.content.Context;
 import android.os.Handler;
 //import android.os.HandlerThread;
 import android.os.Looper;
-import androidx.annotation.IntRange;
-import androidx.annotation.VisibleForTesting;
-import androidx.annotation.WorkerThread;
+//import org.jetbrains.annotations.IntRange;
+import org.jetbrains.annotations.VisibleForTesting;
+//import org.jetbrains.annotations.WorkerThread;
 
 import com.microsoft.appcenter.channel.Channel;
 import com.microsoft.appcenter.channel.DefaultChannel;
@@ -266,7 +266,7 @@ public class AppCenter {
      *
      * @return log level as defined by {@link android.util.Log}.
      */
-    @IntRange(from = VERBOSE, to = NONE)
+//    @IntRange(from = VERBOSE, to = NONE)
     public static int getLogLevel() {
         return AppCenterLog.getLogLevel();
     }
@@ -283,7 +283,9 @@ public class AppCenter {
      * @see android.util.Log#ASSERT
      * @see AppCenterLog#NONE
      */
-    public static void setLogLevel(@IntRange(from = VERBOSE, to = NONE) int logLevel) {
+    public static void setLogLevel(
+//            @IntRange(from = VERBOSE, to = NONE)
+            int logLevel) {
         getInstance().setInstanceLogLevel(logLevel);
     }
 
@@ -834,7 +836,7 @@ public class AppCenter {
         }
     }
 
-    @WorkerThread
+//    @WorkerThread
     private void finishConfiguration(boolean configureFromApp) {
 
         /* Load some global constants. */
@@ -901,7 +903,7 @@ public class AppCenter {
         AppCenterLog.debug(LOG_TAG, "App Center initialized.");
     }
 
-    @WorkerThread
+//    @WorkerThread
     private void applyStorageMaxSize() {
         boolean resizeResult = mChannel.setMaxStorageSize(mMaxStorageSizeInBytes);
         if (mSetMaxStorageSizeFuture != null) {
@@ -1002,7 +1004,7 @@ public class AppCenter {
 //        }
     }
 
-    @WorkerThread
+//    @WorkerThread
     private void finishStartServices(Iterable<AppCenterService> updatedServices, Iterable<AppCenterService> startedServices, boolean startFromApp) {
 
         /* Update existing services with app secret and/or transmission target. */
@@ -1049,7 +1051,7 @@ public class AppCenter {
     /**
      * Queue start service log.
      */
-    @WorkerThread
+//    @WorkerThread
     private void sendStartServiceLog() {
         if (!mStartedServicesNamesToLog.isEmpty() && isInstanceEnabled()) {
             List<String> allServiceNamesToStart = new ArrayList<>(mStartedServicesNamesToLog);
@@ -1117,7 +1119,7 @@ public class AppCenter {
     /**
      * Implements {@link #setInstanceEnabledAsync(boolean)}} after it's posted in background loop.
      */
-    @WorkerThread
+//    @WorkerThread
     private void setInstanceEnabled(boolean enabled) {
 
         /* Update channel state. */

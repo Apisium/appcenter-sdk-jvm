@@ -5,7 +5,7 @@
 
 package com.microsoft.appcenter.http;
 
-import androidx.annotation.NonNull;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -45,7 +45,7 @@ public class HttpResponse {
      * @param status  HTTP status code.
      * @param payload HTTP payload.
      */
-    public HttpResponse(int status, @NonNull String payload) {
+    public HttpResponse(int status, @NotNull String payload) {
         this(status, payload, new HashMap<String, String>());
     }
 
@@ -56,7 +56,7 @@ public class HttpResponse {
      * @param payload HTTP payload.
      * @param headers HTTP responseHeaders.
      */
-    public HttpResponse(int status, @NonNull String payload, @NonNull Map<String, String> headers) {
+    public HttpResponse(int status, @NotNull String payload, @NotNull Map<String, String> headers) {
         this.payload = payload;
         this.statusCode = status;
         this.headers = headers;
@@ -76,7 +76,7 @@ public class HttpResponse {
      *
      * @return HTTP payload. Can be empty string.
      */
-    @NonNull
+    @NotNull
     public String getPayload() {
         return payload;
     }
@@ -86,7 +86,7 @@ public class HttpResponse {
      *
      * @return HTTP headers.
      */
-    @NonNull
+    @NotNull
     public Map<String, String> getHeaders() {
         return headers;
     }

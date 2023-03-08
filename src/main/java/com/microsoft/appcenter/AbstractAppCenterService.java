@@ -9,8 +9,8 @@ import android.app.Activity;
 import android.app.Application;
 import android.content.Context;
 import android.os.Bundle;
-import androidx.annotation.NonNull;
-import androidx.annotation.WorkerThread;
+import org.jetbrains.annotations.NotNull;
+//import org.jetbrains.annotations.WorkerThread;
 
 import com.microsoft.appcenter.channel.Channel;
 import com.microsoft.appcenter.ingestion.models.json.LogFactory;
@@ -137,7 +137,7 @@ public abstract class AbstractAppCenterService implements AppCenterService, Appl
         return SharedPreferencesManager.getBoolean(getEnabledPreferenceKey(), true);
     }
 
-    @WorkerThread
+//    @WorkerThread
     @Override
     public synchronized void setInstanceEnabled(boolean enabled) {
 
@@ -175,7 +175,7 @@ public abstract class AbstractAppCenterService implements AppCenterService, Appl
         }
     }
 
-    @WorkerThread
+//    @WorkerThread
     protected synchronized void applyEnabledState(boolean enabled) {
 
         /* Optional callback to react to enabled state change. */
@@ -187,7 +187,7 @@ public abstract class AbstractAppCenterService implements AppCenterService, Appl
     }
 
     @Override
-    public final synchronized void onStarting(@NonNull AppCenterHandler handler) {
+    public final synchronized void onStarting(@NotNull AppCenterHandler handler) {
 
         /*
          * The method is final just to avoid a sub-class start using the handler now,
@@ -196,9 +196,9 @@ public abstract class AbstractAppCenterService implements AppCenterService, Appl
         mHandler = handler;
     }
 
-    @WorkerThread
+//    @WorkerThread
     @Override
-    public synchronized void onStarted(@NonNull Context context, @NonNull Channel channel, String appSecret, String transmissionTargetToken, boolean startedFromApp) {
+    public synchronized void onStarted(@NotNull Context context, @NotNull Channel channel, String appSecret, String transmissionTargetToken, boolean startedFromApp) {
         String groupName = getGroupName();
         boolean enabled = isInstanceEnabled();
         if (groupName != null) {
@@ -252,7 +252,7 @@ public abstract class AbstractAppCenterService implements AppCenterService, Appl
         return mChannel != null;
     }
 
-    @NonNull
+    @NotNull
     protected String getEnabledPreferenceKey() {
         return KEY_ENABLED + PREFERENCE_KEY_SEPARATOR + getServiceName();
     }

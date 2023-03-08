@@ -6,8 +6,8 @@
 package com.microsoft.appcenter.crashes;
 
 import android.content.Context;
-import androidx.annotation.NonNull;
-import androidx.annotation.VisibleForTesting;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.VisibleForTesting;
 
 import com.microsoft.appcenter.crashes.ingestion.models.ErrorAttachmentLog;
 import com.microsoft.appcenter.crashes.model.ErrorReport;
@@ -121,7 +121,7 @@ public class WrapperSdkExceptionManager {
      * @param errorId The associated error UUID
      * @return The corresponding file object
      */
-    private static File getFile(@NonNull UUID errorId) {
+    private static File getFile(@NotNull UUID errorId) {
         File errorStorageDirectory = ErrorLogHelper.getErrorStorageDirectory();
         String filename = errorId.toString() + DATA_FILE_EXTENSION;
         return new File(errorStorageDirectory, filename);

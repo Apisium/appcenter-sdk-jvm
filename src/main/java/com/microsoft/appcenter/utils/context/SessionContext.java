@@ -5,9 +5,9 @@
 
 package com.microsoft.appcenter.utils.context;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.VisibleForTesting;
-import androidx.annotation.WorkerThread;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.VisibleForTesting;
+//import org.jetbrains.annotations.WorkerThread;
 
 import com.microsoft.appcenter.utils.AppCenterLog;
 import com.microsoft.appcenter.utils.storage.SharedPreferencesManager;
@@ -65,7 +65,7 @@ public class SessionContext {
     /**
      * Init.
      */
-    @WorkerThread
+//    @WorkerThread
     private SessionContext() {
 
         /* Try loading past sessions from storage. */
@@ -101,7 +101,7 @@ public class SessionContext {
         addSession(null);
     }
 
-    @WorkerThread
+//    @WorkerThread
     public static synchronized SessionContext getInstance() {
         if (sInstance == null) {
             sInstance = new SessionContext();
@@ -215,7 +215,7 @@ public class SessionContext {
             return mAppLaunchTimestamp;
         }
 
-        @NonNull
+        @NotNull
         @Override
         public String toString() {
             String rawSession = getTimestamp() + STORAGE_KEY_VALUE_SEPARATOR;

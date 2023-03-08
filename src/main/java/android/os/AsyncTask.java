@@ -1,7 +1,5 @@
 package android.os;
 
-import org.jetbrains.annotations.NotNull;
-
 import java.util.concurrent.*;
 
 public abstract class AsyncTask <Params, Progress, Result> {

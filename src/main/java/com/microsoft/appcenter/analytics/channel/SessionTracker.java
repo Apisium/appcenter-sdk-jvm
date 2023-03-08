@@ -6,8 +6,8 @@
 package com.microsoft.appcenter.analytics.channel;
 
 import android.os.SystemClock;
-import androidx.annotation.NonNull;
-import androidx.annotation.WorkerThread;
+import org.jetbrains.annotations.NotNull;
+//import org.jetbrains.annotations.WorkerThread;
 
 import com.microsoft.appcenter.Flags;
 import com.microsoft.appcenter.analytics.Analytics;
@@ -81,7 +81,7 @@ public class SessionTracker extends AbstractChannelListener {
     }
 
     @Override
-    public void onPreparingLog(@NonNull Log log, @NonNull String groupName) {
+    public void onPreparingLog(@NotNull Log log, @NotNull String groupName) {
 
         /*
          * Since we enqueue start session logs, skip them to avoid infinite loop.
@@ -126,7 +126,7 @@ public class SessionTracker extends AbstractChannelListener {
      * the session even when no pages are triggered but at the same time we want to keep using
      * the same session as long as the current activity is not paused (long video for example).
      */
-    @WorkerThread
+//    @WorkerThread
     private void sendStartSessionIfNeeded() {
         if (mSid == null || hasSessionTimedOut()) {
 
@@ -159,7 +159,7 @@ public class SessionTracker extends AbstractChannelListener {
     /**
      * Call this whenever an activity is resumed to update session tracker state.
      */
-    @WorkerThread
+//    @WorkerThread
     public void onActivityResumed() {
         if (isManualSessionTrackerEnabled) {
             AppCenterLog.verbose(Analytics.LOG_TAG, "Manual session tracker is enabled. Skip tracking a session status request after resumed activity.");
@@ -175,7 +175,7 @@ public class SessionTracker extends AbstractChannelListener {
     /**
      * Call this whenever an activity is paused to update session tracker state.
      */
-    @WorkerThread
+//    @WorkerThread
     public void onActivityPaused() {
         if (isManualSessionTrackerEnabled) {
             AppCenterLog.verbose(Analytics.LOG_TAG, "Manual session tracker is enabled. Skip tracking a session status request after paused activity.");

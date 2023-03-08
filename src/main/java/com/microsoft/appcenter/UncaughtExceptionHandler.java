@@ -6,7 +6,7 @@
 package com.microsoft.appcenter;
 
 import android.os.Handler;
-import androidx.annotation.VisibleForTesting;
+import org.jetbrains.annotations.VisibleForTesting;
 
 import com.microsoft.appcenter.channel.Channel;
 import com.microsoft.appcenter.utils.AppCenterLog;

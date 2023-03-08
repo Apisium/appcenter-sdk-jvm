@@ -9,8 +9,8 @@ package com.microsoft.appcenter.utils.storage;
 import android.content.Context;
 //import android.text.TextUtils;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import com.microsoft.appcenter.AppCenter;
 import com.microsoft.appcenter.utils.AppCenterLog;
@@ -54,7 +54,7 @@ public class FileManager {
      * @return The contents of the file.
      */
     @SuppressWarnings("SameParameterValue")
-    public static String read(@NonNull String path) {
+    public static String read(@NotNull String path) {
         return read(new File(path));
     }
 
@@ -64,7 +64,7 @@ public class FileManager {
      * @param file The file to read from.
      * @return The contents of the file.
      */
-    public static String read(@NonNull File file) {
+    public static String read(@NotNull File file) {
         try {
             BufferedReader reader = new BufferedReader(new FileReader(file));
             StringBuilder contents;
@@ -97,7 +97,7 @@ public class FileManager {
      * @param file The file to read from.
      * @return The contents of the file.
      */
-    public static byte[] readBytes(@NonNull File file) {
+    public static byte[] readBytes(@NotNull File file) {
         byte[] fileContents = new byte[(int) file.length()];
         try {
             FileInputStream fileStream = new FileInputStream(file);
@@ -123,7 +123,7 @@ public class FileManager {
      * @param contents The contents to be written to the file.
      * @throws IOException If an I/O error occurs
      */
-    public static void write(@NonNull String path, @NonNull String contents) throws IOException {
+    public static void write(@NotNull String path, @NotNull String contents) throws IOException {
         write(new File(path), contents);
     }
 
@@ -134,7 +134,7 @@ public class FileManager {
      * @param contents The content to be written to the file. Must not be empty or whitespace only.
      * @throws IOException If an I/O error occurs
      */
-    public static void write(@NonNull File file, @NonNull String contents) throws IOException {
+    public static void write(@NotNull File file, @NotNull String contents) throws IOException {
         if (contents.isEmpty() || contents.trim().isEmpty()) {
             return;
         }
@@ -155,7 +155,7 @@ public class FileManager {
      * @return The last modified file in the directory matching the specified filter, if any matches. {@code null} otherwise.
      */
     @Nullable
-    public static File lastModifiedFile(@NonNull File dir, @Nullable FilenameFilter filter) {
+    public static File lastModifiedFile(@NotNull File dir, @Nullable FilenameFilter filter) {
         if (dir.exists()) {
             File[] files = dir.listFiles(filter);
             long lastModification = 0;
@@ -181,7 +181,7 @@ public class FileManager {
      * @param path The path of the file or directory.
      * @return {@code true} if it was deleted, {@code false} otherwise.
      */
-    public static boolean delete(@NonNull String path) {
+    public static boolean delete(@NotNull String path) {
         return delete(new File(path));
     }
 
@@ -191,7 +191,7 @@ public class FileManager {
      * @param file The file or directory to delete.
      * @return {@code true} if it was deleted, {@code false} otherwise.
      */
-    public static boolean delete(@NonNull File file) {
+    public static boolean delete(@NotNull File file) {
         return file.delete();
     }
 
@@ -201,7 +201,7 @@ public class FileManager {
      * @param file The file or directory to delete.
      * @return {@code true} if it was deleted, {@code false} otherwise.
      */
-    public static boolean deleteDirectory(@NonNull File file) {
+    public static boolean deleteDirectory(@NotNull File file) {
         File[] contents = file.listFiles();
         if (contents != null) {
             for (File f : contents) {
@@ -216,7 +216,7 @@ public class FileManager {
      *
      * @param directory The directory to delete.
      */
-    public static void cleanDirectory(@NonNull File directory) {
+    public static void cleanDirectory(@NotNull File directory) {
         File[] contents = directory.listFiles();
         if (contents != null) {
             for (File file : contents) {
@@ -232,7 +232,7 @@ public class FileManager {
      * @param path An absolute path for the directory to be created.
      */
     @SuppressWarnings("ResultOfMethodCallIgnored")
-    public static void mkdir(@NonNull String path) {
+    public static void mkdir(@NotNull String path) {
         new File(path).mkdirs();
     }
 
@@ -242,8 +242,8 @@ public class FileManager {
      * @param file The file which name without extension needed.
      * @return Filename without extension.
      */
-    @NonNull
-    public static String getNameWithoutExtension(@NonNull File file) {
+    @NotNull
+    public static String getNameWithoutExtension(@NotNull File file) {
         String fileName = file.getName();
         int indexOfLastDot = fileName.lastIndexOf(".");
         if (indexOfLastDot > 0 && indexOfLastDot < fileName.length() - 1) {

@@ -9,8 +9,8 @@ import static android.util.Log.VERBOSE;
 
 import android.util.Log;
 
-import androidx.annotation.IntRange;
-import androidx.annotation.NonNull;
+//import org.jetbrains.annotations.IntRange;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -68,7 +68,7 @@ public class AppCenterLog {
      *
      * @return the log level
      */
-    @IntRange(from = VERBOSE, to = NONE)
+//    @IntRange(from = VERBOSE, to = NONE)
     public static int getLogLevel() {
         return sLogLevel;
     }
@@ -78,7 +78,9 @@ public class AppCenterLog {
      *
      * @param logLevel The log level for SDK logging.
      */
-    public static void setLogLevel(@IntRange(from = VERBOSE, to = NONE) int logLevel) {
+    public static void setLogLevel(
+//            @IntRange(from = VERBOSE, to = NONE)
+            int logLevel) {
         sLogLevel = logLevel;
     }
 
@@ -88,7 +90,7 @@ public class AppCenterLog {
      * @param tag     the log tag for your message
      * @param message the log message
      */
-    public static void verbose(@NonNull String tag, @NonNull String message) {
+    public static void verbose(@NotNull String tag, @NotNull String message) {
         if (sLogLevel <= Log.VERBOSE) {
             if (mCustomLogger != null) {
                 mCustomLogger.log(Level.ALL, getMessageWithTag(tag, message));
@@ -106,7 +108,7 @@ public class AppCenterLog {
      * @param throwable the throwable you want to log
      */
     @SuppressWarnings("SameParameterValue")
-    public static void verbose(@NonNull String tag, @NonNull String message, Throwable throwable) {
+    public static void verbose(@NotNull String tag, @NotNull String message, Throwable throwable) {
         if (sLogLevel <= Log.VERBOSE) {
             if (mCustomLogger != null) {
                 mCustomLogger.log(Level.ALL, getMessageWithTag(tag, message), throwable);
@@ -122,7 +124,7 @@ public class AppCenterLog {
      * @param tag     the log tag for your message
      * @param message the log message
      */
-    public static void debug(@NonNull String tag, @NonNull String message) {
+    public static void debug(@NotNull String tag, @NotNull String message) {
         if (sLogLevel <= Log.DEBUG) {
             if (mCustomLogger != null) {
                 mCustomLogger.log(Level.FINE, getMessageWithTag(tag, message));
@@ -139,7 +141,7 @@ public class AppCenterLog {
      * @param message   the log message
      * @param throwable the throwable you want to log
      */
-    public static void debug(@NonNull String tag, @NonNull String message, Throwable throwable) {
+    public static void debug(@NotNull String tag, @NotNull String message, Throwable throwable) {
         if (sLogLevel <= Log.DEBUG) {
             if (mCustomLogger != null) {
                 mCustomLogger.log(Level.FINE, getMessageWithTag(tag, message), throwable);
@@ -155,7 +157,7 @@ public class AppCenterLog {
      * @param tag     the log tag for your message
      * @param message the log message
      */
-    public static void info(@NonNull String tag, @NonNull String message) {
+    public static void info(@NotNull String tag, @NotNull String message) {
         if (sLogLevel <= Log.INFO) {
             if (mCustomLogger != null) {
                 mCustomLogger.log(Level.INFO, getMessageWithTag(tag, message));
@@ -173,7 +175,7 @@ public class AppCenterLog {
      * @param throwable the throwable you want to log
      */
     @SuppressWarnings("SameParameterValue")
-    public static void info(@NonNull String tag, @NonNull String message, Throwable throwable) {
+    public static void info(@NotNull String tag, @NotNull String message, Throwable throwable) {
         if (sLogLevel <= Log.INFO) {
             if (mCustomLogger != null) {
                 mCustomLogger.log(Level.INFO, getMessageWithTag(tag, message), throwable);
@@ -189,7 +191,7 @@ public class AppCenterLog {
      * @param tag     the TAG
      * @param message the log message
      */
-    public static void warn(@NonNull String tag, @NonNull String message) {
+    public static void warn(@NotNull String tag, @NotNull String message) {
         if (sLogLevel <= Log.WARN) {
             if (mCustomLogger != null) {
                 mCustomLogger.log(Level.WARNING, getMessageWithTag(tag, message));
@@ -206,7 +208,7 @@ public class AppCenterLog {
      * @param message   the log message
      * @param throwable the throwable you want to log
      */
-    public static void warn(@NonNull String tag, @NonNull String message, Throwable throwable) {
+    public static void warn(@NotNull String tag, @NotNull String message, Throwable throwable) {
         if (sLogLevel <= Log.WARN) {
             if (mCustomLogger != null) {
                 mCustomLogger.log(Level.WARNING, getMessageWithTag(tag, message), throwable);
@@ -222,7 +224,7 @@ public class AppCenterLog {
      * @param tag     the log tag for your message
      * @param message the log message
      */
-    public static void error(@NonNull String tag, @NonNull String message) {
+    public static void error(@NotNull String tag, @NotNull String message) {
         if (sLogLevel <= Log.ERROR) {
             if (mCustomLogger != null) {
                 mCustomLogger.log(Level.SEVERE, getMessageWithTag(tag, message));
@@ -239,7 +241,7 @@ public class AppCenterLog {
      * @param message   the log message
      * @param throwable the throwable you want to log
      */
-    public static void error(@NonNull String tag, @NonNull String message, Throwable throwable) {
+    public static void error(@NotNull String tag, @NotNull String message, Throwable throwable) {
         if (sLogLevel <= Log.ERROR) {
             if (mCustomLogger != null) {
                 mCustomLogger.log(Level.SEVERE, getMessageWithTag(tag, message), throwable);
@@ -256,7 +258,7 @@ public class AppCenterLog {
      * @param message the log message
      */
     @SuppressWarnings("WeakerAccess")
-    public static void logAssert(@NonNull String tag, @NonNull String message) {
+    public static void logAssert(@NotNull String tag, @NotNull String message) {
         if (sLogLevel <= Log.ASSERT) {
             Log.println(Log.ASSERT, tag, message);
         }
@@ -270,7 +272,7 @@ public class AppCenterLog {
      * @param throwable the throwable you want to log
      */
     @SuppressWarnings({"WeakerAccess", "SameParameterValue"})
-    public static void logAssert(@NonNull String tag, @NonNull String message, Throwable throwable) {
+    public static void logAssert(@NotNull String tag, @NotNull String message, Throwable throwable) {
         if (sLogLevel <= Log.ASSERT) {
             Log.println(Log.ASSERT, tag, message + "\n" + Log.getStackTraceString(throwable));
         }

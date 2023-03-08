@@ -7,7 +7,7 @@ package com.microsoft.appcenter.analytics;
 
 //import android.annotation.SuppressLint;
 //import android.provider.Settings.Secure;
-import androidx.annotation.NonNull;
+import org.jetbrains.annotations.NotNull;
 
 import com.microsoft.appcenter.channel.AbstractChannelListener;
 import com.microsoft.appcenter.ingestion.models.Log;
@@ -89,7 +89,7 @@ public class PropertyConfigurator extends AbstractChannelListener {
      * @param groupName The group name.
      */
     @Override
-    public void onPreparingLog(@NonNull Log log, @NonNull String groupName) {
+    public void onPreparingLog(@NotNull Log log, @NotNull String groupName) {
         if (shouldOverridePartAProperties(log)) {
             AppExtension app = ((CommonSchemaLog) log).getExt().getApp();
             UserExtension user = ((CommonSchemaLog) log).getExt().getUser();
@@ -165,7 +165,7 @@ public class PropertyConfigurator extends AbstractChannelListener {
      * @param log log.
      * @return true if log should be overridden, false otherwise.
      */
-    private boolean shouldOverridePartAProperties(@NonNull Log log) {
+    private boolean shouldOverridePartAProperties(@NotNull Log log) {
         return log instanceof CommonSchemaLog && log.getTag() == mTransmissionTarget &&
                 mTransmissionTarget.isEnabled();
     }

@@ -5,9 +5,9 @@
 
 package com.microsoft.appcenter.persistence;
 
-import androidx.annotation.IntRange;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
+//import org.jetbrains.annotations.IntRange;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import com.microsoft.appcenter.Flags;
 import com.microsoft.appcenter.ingestion.models.Log;
@@ -37,8 +37,9 @@ public abstract class Persistence implements Closeable {
      * @return Log identifier from persistence after saving.
      * @throws PersistenceException Exception will be thrown if Persistence cannot write a log to the storage.
      */
-    public abstract long putLog(@NonNull Log log, @NonNull String group,
-                                @IntRange(from = Flags.NORMAL, to = Flags.CRITICAL) int flags) throws PersistenceException;
+    public abstract long putLog(@NotNull Log log, @NotNull String group,
+//                                @IntRange(from = Flags.NORMAL, to = Flags.CRITICAL)
+                                int flags) throws PersistenceException;
 
     /**
      * Deletes a log with the give ID from the {@code group}.
@@ -46,7 +47,7 @@ public abstract class Persistence implements Closeable {
      * @param group   The group of the storage for logs.
      * @param batchId The ID for a set of logs.
      */
-    public abstract void deleteLogs(@NonNull String group, @NonNull String batchId);
+    public abstract void deleteLogs(@NotNull String group, @NotNull String batchId);
 
     /**
      * Deletes all logs for the given {@code group}.
@@ -61,7 +62,7 @@ public abstract class Persistence implements Closeable {
      * @param group The group of the storage for logs.
      * @return The number of logs for the given {@code group}.
      */
-    public abstract int countLogs(@NonNull String group);
+    public abstract int countLogs(@NotNull String group);
 
     /**
      * Gets an array of logs for the given {@code group}.
@@ -73,7 +74,9 @@ public abstract class Persistence implements Closeable {
      * @return An ID for {@code outLogs}. {@code null} if no logs exist.
      */
     @Nullable
-    public abstract String getLogs(@NonNull String group, @NonNull Collection<String> pausedTargetKeys, @IntRange(from = 0) int limit, @NonNull List<Log> outLogs);
+    public abstract String getLogs(@NotNull String group, @NotNull Collection<String> pausedTargetKeys,
+//                                   @IntRange(from = 0)
+                                   int limit, @NotNull List<Log> outLogs);
 
     /**
      * Clears all associations between logs of the {@code group} and ids returned by {@link #getLogs(String, Collection, int, List)}}.
@@ -97,7 +100,7 @@ public abstract class Persistence implements Closeable {
      *
      * @param logSerializer The log serializer instance.
      */
-    public void setLogSerializer(@NonNull LogSerializer logSerializer) {
+    public void setLogSerializer(@NotNull LogSerializer logSerializer) {
         mLogSerializer = logSerializer;
     }
 

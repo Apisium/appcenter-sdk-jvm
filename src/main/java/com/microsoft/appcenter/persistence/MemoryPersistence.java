@@ -1,9 +1,8 @@
 package com.microsoft.appcenter.persistence;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import com.microsoft.appcenter.ingestion.models.Log;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+import com.microsoft.appcenter.ingestion.models.Log;
 
 import java.io.IOException;
 import java.util.*;
@@ -13,13 +12,13 @@ public class MemoryPersistence extends Persistence {
     private final HashMap<String, Set<Log>> batches = new HashMap<>();
     private int id = 0;
     @Override
-    public long putLog(@NonNull Log log, @NonNull String group, int flags) throws PersistenceException {
+    public long putLog(@NotNull Log log, @NotNull String group, int flags) throws PersistenceException {
         mLogs.computeIfAbsent(group, k -> new ArrayList<>()).add(log);
         return id++;
     }
 
     @Override
-    public void deleteLogs(@NonNull String group, @NonNull String batchId) {
+    public void deleteLogs(@NotNull String group, @NotNull String batchId) {
         Set<Log> logs = batches.get(batchId);
         if (logs == null) return;
         List<Log> logs2 = mLogs.get(group);
@@ -33,14 +32,14 @@ public class MemoryPersistence extends Persistence {
     }
 
     @Override
-    public int countLogs(@NonNull String group) {
+    public int countLogs(@NotNull String group) {
         List<Log> log = mLogs.get(group);
         return log == null ? 0 : log.size();
     }
 
     @Nullable
     @Override
-    public String getLogs(@NonNull String group, @NonNull Collection<String> pausedTargetKeys, int limit, @NonNull List<Log> outLogs) {
+    public String getLogs(@NotNull String group, @NotNull Collection<String> pausedTargetKeys, int limit, @NotNull List<Log> outLogs) {
         String batchId = UUID.randomUUID().toString();
         List<Log> log = mLogs.get(group);
         if (log == null) return batchId;

@@ -6,7 +6,7 @@
 package com.microsoft.appcenter.channel;
 
 
-import androidx.annotation.NonNull;
+import org.jetbrains.annotations.NotNull;
 
 import com.microsoft.appcenter.ingestion.models.Log;
 
@@ -16,23 +16,23 @@ import com.microsoft.appcenter.ingestion.models.Log;
 public class AbstractChannelListener implements Channel.Listener {
 
     @Override
-    public void onGroupAdded(@NonNull String groupName, Channel.GroupListener groupListener, long batchTimeInterval) {
+    public void onGroupAdded(@NotNull String groupName, Channel.GroupListener groupListener, long batchTimeInterval) {
     }
 
     @Override
-    public void onGroupRemoved(@NonNull String groupName) {
+    public void onGroupRemoved(@NotNull String groupName) {
     }
 
     @Override
-    public void onPreparingLog(@NonNull Log log, @NonNull String groupName) {
+    public void onPreparingLog(@NotNull Log log, @NotNull String groupName) {
     }
 
     @Override
-    public void onPreparedLog(@NonNull Log log, @NonNull String groupName, int flags) {
+    public void onPreparedLog(@NotNull Log log, @NotNull String groupName, int flags) {
     }
 
     @Override
-    public boolean shouldFilter(@NonNull Log log) {
+    public boolean shouldFilter(@NotNull Log log) {
         return false;
     }
 
@@ -41,14 +41,14 @@ public class AbstractChannelListener implements Channel.Listener {
     }
 
     @Override
-    public void onClear(@NonNull String groupName) {
+    public void onClear(@NotNull String groupName) {
     }
 
     @Override
-    public void onPaused(@NonNull String groupName, String targetToken) {
+    public void onPaused(@NotNull String groupName, String targetToken) {
     }
 
     @Override
-    public void onResumed(@NonNull String groupName, String targetToken) {
+    public void onResumed(@NotNull String groupName, String targetToken) {
     }
 }

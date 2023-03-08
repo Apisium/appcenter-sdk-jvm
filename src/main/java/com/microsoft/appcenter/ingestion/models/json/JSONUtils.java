@@ -5,7 +5,7 @@
 
 package com.microsoft.appcenter.ingestion.models.json;
 
-import androidx.annotation.VisibleForTesting;
+import org.jetbrains.annotations.VisibleForTesting;
 
 import com.microsoft.appcenter.ingestion.models.Model;
 

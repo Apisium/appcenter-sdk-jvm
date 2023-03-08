@@ -7,7 +7,7 @@ package com.microsoft.appcenter.utils;
 
 import android.os.Handler;
 import android.os.Looper;
-import androidx.annotation.VisibleForTesting;
+import org.jetbrains.annotations.VisibleForTesting;
 
 /**
  * Utilities related to Handler class.

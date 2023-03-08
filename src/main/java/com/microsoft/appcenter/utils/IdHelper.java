@@ -5,7 +5,7 @@
 
 package com.microsoft.appcenter.utils;
 
-import androidx.annotation.NonNull;
+import org.jetbrains.annotations.NotNull;
 
 import com.microsoft.appcenter.AppCenter;
 import com.microsoft.appcenter.utils.storage.SharedPreferencesManager;
@@ -21,7 +21,7 @@ public class IdHelper {
      *
      * @return the installID
      */
-    @NonNull
+    @NotNull
     public static UUID getInstallId() {
         String installIdString = SharedPreferencesManager.getString(KEY_INSTALL_ID, "");
         UUID installId;

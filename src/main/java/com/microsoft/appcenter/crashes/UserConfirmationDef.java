@@ -5,16 +5,16 @@
 
 package com.microsoft.appcenter.crashes;
 
-import androidx.annotation.IntDef;
+//import org.jetbrains.annotations.IntDef;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 
 @Retention(RetentionPolicy.SOURCE)
-@IntDef({
-        Crashes.SEND,
-        Crashes.DONT_SEND,
-        Crashes.ALWAYS_SEND
-})
+//@IntDef({
+//        Crashes.SEND,
+//        Crashes.DONT_SEND,
+//        Crashes.ALWAYS_SEND
+//})
 @interface UserConfirmationDef {
 }

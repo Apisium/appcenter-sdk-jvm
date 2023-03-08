@@ -5,8 +5,8 @@
 
 package com.microsoft.appcenter.analytics.channel;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.VisibleForTesting;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.VisibleForTesting;
 
 import com.microsoft.appcenter.analytics.ingestion.models.EventLog;
 import com.microsoft.appcenter.analytics.ingestion.models.LogWithNameAndProperties;
@@ -54,7 +54,7 @@ public class AnalyticsValidator extends AbstractChannelListener {
      * @param log The log.
      * @return true if validation passed, false otherwise.
      */
-    private boolean validateLog(@NonNull LogWithNameAndProperties log) {
+    private boolean validateLog(@NotNull LogWithNameAndProperties log) {
         String name = validateName(log.getName(), log.getType());
         if (name == null) {
             return false;
@@ -71,7 +71,7 @@ public class AnalyticsValidator extends AbstractChannelListener {
      * @param log The log.
      * @return true if validation passed, false otherwise.
      */
-    private boolean validateLog(@NonNull EventLog log) {
+    private boolean validateLog(@NotNull EventLog log) {
         String name = validateName(log.getName(), log.getType());
         if (name == null) {
             return false;
@@ -243,7 +243,7 @@ public class AnalyticsValidator extends AbstractChannelListener {
     }
 
     @Override
-    public boolean shouldFilter(@NonNull Log log) {
+    public boolean shouldFilter(@NotNull Log log) {
         if (log instanceof PageLog) {
             return !validateLog((LogWithNameAndProperties) log);
         } else if (log instanceof EventLog) {

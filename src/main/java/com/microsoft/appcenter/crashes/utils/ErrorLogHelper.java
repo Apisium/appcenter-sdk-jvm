@@ -10,9 +10,9 @@ package com.microsoft.appcenter.crashes.utils;
 import android.content.Context;
 //import android.os.Build;
 //import android.os.Process;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.annotation.VisibleForTesting;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.VisibleForTesting;
 
 import com.microsoft.appcenter.Constants;
 import com.microsoft.appcenter.crashes.Crashes;
@@ -152,13 +152,13 @@ public class ErrorLogHelper {
     @VisibleForTesting
     static String USER_ID_KEY = "USER_ID";
 
-    @NonNull
-    public static ManagedErrorLog createErrorLog(@NonNull Context context, @NonNull final java.lang.Thread thread, @NonNull final Throwable throwable, @NonNull final Map<java.lang.Thread, StackTraceElement[]> allStackTraces, final long initializeTimestamp) {
+    @NotNull
+    public static ManagedErrorLog createErrorLog(@NotNull Context context, @NotNull final java.lang.Thread thread, @NotNull final Throwable throwable, @NotNull final Map<java.lang.Thread, StackTraceElement[]> allStackTraces, final long initializeTimestamp) {
         return createErrorLog(context, thread, getModelExceptionFromThrowable(throwable), allStackTraces, initializeTimestamp, true);
     }
 
-    @NonNull
-    public static ManagedErrorLog createErrorLog(@NonNull Context context, @NonNull final java.lang.Thread thread, @NonNull final Exception exception, @NonNull final Map<java.lang.Thread, StackTraceElement[]> allStackTraces, final long initializeTimestamp, boolean fatal) {
+    @NotNull
+    public static ManagedErrorLog createErrorLog(@NotNull Context context, @NotNull final java.lang.Thread thread, @NotNull final Exception exception, @NotNull final Map<java.lang.Thread, StackTraceElement[]> allStackTraces, final long initializeTimestamp, boolean fatal) {
 
         /* Build error log with a unique identifier. */
         ManagedErrorLog errorLog = new ManagedErrorLog();
@@ -241,7 +241,7 @@ public class ErrorLogHelper {
         return System.getProperty("os.arch");
     }
 
-    @NonNull
+    @NotNull
     public static synchronized File getErrorStorageDirectory() {
         if (sErrorLogDirectory == null) {
             sErrorLogDirectory = new File(Constants.FILES_PATH, ERROR_DIRECTORY);
@@ -255,7 +255,7 @@ public class ErrorLogHelper {
      *
      * @return a folder name e.g. /lib/files/error/minidump/new
      */
-    @NonNull
+    @NotNull
     public static synchronized File getNewMinidumpDirectory() {
         File errorStorageDirectory = getErrorStorageDirectory();
         File minidumpDirectory = new File(errorStorageDirectory.getAbsolutePath(), MINIDUMP_DIRECTORY);
@@ -267,7 +267,7 @@ public class ErrorLogHelper {
      *
      * @return a folder name e.g. /lib/files/error/minidump/new/aae16c29-42a9-baee-0777e6ba8fe3
      */
-    @NonNull
+    @NotNull
     public static synchronized File getNewMinidumpSubfolder() {
         if (sNewMinidumpDirectory == null) {
             File minidumpDirectory = getNewMinidumpDirectory();
@@ -285,7 +285,7 @@ public class ErrorLogHelper {
      *
      * @return a folder name e.g. /lib/files/error/minidump/new/aae16c29-f9e7-42a9-baee-0777e6ba8fe3
      */
-    @NonNull
+    @NotNull
     public static synchronized File getNewMinidumpSubfolderWithContextData(Context context) {
         File directorySubfolder = getNewMinidumpSubfolder();
         File deviceInfoFile = new File(directorySubfolder, ErrorLogHelper.DEVICE_INFO_FILE);
@@ -320,7 +320,7 @@ public class ErrorLogHelper {
      *
      * @return a folder name e.g. /lib/files/error/minidump/pending
      */
-    @NonNull
+    @NotNull
     public static synchronized File getPendingMinidumpDirectory() {
         if (sPendingMinidumpDirectory == null) {
             File errorStorageDirectory = getErrorStorageDirectory();
@@ -331,7 +331,7 @@ public class ErrorLogHelper {
         return sPendingMinidumpDirectory;
     }
 
-    @NonNull
+    @NotNull
     public static File[] getStoredErrorLogFiles() {
         File[] files = getErrorStorageDirectory().listFiles(new FilenameFilter() {
             @Override
@@ -342,7 +342,7 @@ public class ErrorLogHelper {
         return files != null ? files : new File[0];
     }
 
-    @NonNull
+    @NotNull
     public static File[] getNewMinidumpFiles() {
         File[] files = getNewMinidumpDirectory().listFiles();
         return files != null ? files : new File[0];
@@ -489,11 +489,11 @@ public class ErrorLogHelper {
     }
 
     @Nullable
-    public static File getStoredThrowableFile(@NonNull UUID id) {
+    public static File getStoredThrowableFile(@NotNull UUID id) {
         return getStoredFile(id, THROWABLE_FILE_EXTENSION);
     }
 
-    public static void removeStoredThrowableFile(@NonNull UUID id) {
+    public static void removeStoredThrowableFile(@NotNull UUID id) {
         File file = getStoredThrowableFile(id);
         if (file != null) {
             AppCenterLog.info(Crashes.LOG_TAG, "Deleting throwable file " + file.getName());
@@ -502,11 +502,11 @@ public class ErrorLogHelper {
     }
 
     @Nullable
-    static File getStoredErrorLogFile(@NonNull UUID id) {
+    static File getStoredErrorLogFile(@NotNull UUID id) {
         return getStoredFile(id, ERROR_LOG_FILE_EXTENSION);
     }
 
-    public static void removeStoredErrorLogFile(@NonNull UUID id) {
+    public static void removeStoredErrorLogFile(@NotNull UUID id) {
         File file = getStoredErrorLogFile(id);
         if (file != null) {
             AppCenterLog.info(Crashes.LOG_TAG, "Deleting error log file " + file.getName());
@@ -532,8 +532,8 @@ public class ErrorLogHelper {
         }
     }
 
-    @NonNull
-    public static ErrorReport getErrorReportFromErrorLog(@NonNull ManagedErrorLog log, String stackTrace) {
+    @NotNull
+    public static ErrorReport getErrorReportFromErrorLog(@NotNull ManagedErrorLog log, String stackTrace) {
         ErrorReport report = new ErrorReport();
         report.setId(log.getId().toString());
         report.setThreadName(log.getErrorThreadName());
@@ -549,7 +549,7 @@ public class ErrorLogHelper {
     }
 
     @Nullable
-    private static File getStoredFile(@NonNull final UUID id, @NonNull final String extension) {
+    private static File getStoredFile(@NotNull final UUID id, @NotNull final String extension) {
         File[] files = getErrorStorageDirectory().listFiles(new FilenameFilter() {
             @Override
             public boolean accept(File dir, String filename) {
@@ -560,8 +560,8 @@ public class ErrorLogHelper {
         return files != null && files.length > 0 ? files[0] : null;
     }
 
-    @NonNull
-    public static Exception getModelExceptionFromThrowable(@NonNull Throwable t) {
+    @NotNull
+    public static Exception getModelExceptionFromThrowable(@NotNull Throwable t) {
         Exception topException = null;
         Exception parentException = null;
         List<Throwable> causeChain = new LinkedList<>();
@@ -589,8 +589,8 @@ public class ErrorLogHelper {
         return topException;
     }
 
-    @NonNull
-    private static List<StackFrame> getModelFramesFromStackTrace(@NonNull Throwable throwable) {
+    @NotNull
+    private static List<StackFrame> getModelFramesFromStackTrace(@NotNull Throwable throwable) {
         StackTraceElement[] stackTrace = throwable.getStackTrace();
         if (stackTrace.length > FRAME_LIMIT) {
             StackTraceElement[] stackTraceTruncated = new StackTraceElement[FRAME_LIMIT];
@@ -603,8 +603,8 @@ public class ErrorLogHelper {
         return getModelFramesFromStackTrace(stackTrace);
     }
 
-    @NonNull
-    private static List<StackFrame> getModelFramesFromStackTrace(@NonNull StackTraceElement[] stackTrace) {
+    @NotNull
+    private static List<StackFrame> getModelFramesFromStackTrace(@NotNull StackTraceElement[] stackTrace) {
         List<StackFrame> stackFrames = new ArrayList<>();
         for (StackTraceElement stackTraceElement : stackTrace) {
             stackFrames.add(getModelStackFrame(stackTraceElement));
@@ -612,7 +612,7 @@ public class ErrorLogHelper {
         return stackFrames;
     }
 
-    @NonNull
+    @NotNull
     private static StackFrame getModelStackFrame(StackTraceElement stackTraceElement) {
         StackFrame stackFrame = new StackFrame();
         stackFrame.setClassName(stackTraceElement.getClassName());
@@ -681,7 +681,7 @@ public class ErrorLogHelper {
      * @param logFolder a folder, e.g. lib/files/error/minidump/new/a80da2ae-8c85-43b0-a25b-d52319fb6d56
      * @return parsed UUID or random UUID.
      */
-    @NonNull
+    @NotNull
     public static UUID parseLogFolderUuid(File logFolder) {
         UUID uuid = null;
         if (logFolder.isDirectory()) {

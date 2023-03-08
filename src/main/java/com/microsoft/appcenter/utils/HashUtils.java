@@ -5,8 +5,8 @@
 
 package com.microsoft.appcenter.utils;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.VisibleForTesting;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.VisibleForTesting;
 
 import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
@@ -31,14 +31,14 @@ public class HashUtils {
      * @param data data to hash.
      * @return hashed data in hexadecimal output.
      */
-    @NonNull
-    public static String sha256(@NonNull String data) {
+    @NotNull
+    public static String sha256(@NotNull String data) {
         return sha256(data, "UTF-8");
     }
 
-    @NonNull
+    @NotNull
     @VisibleForTesting
-    static String sha256(@NonNull String data, String charsetName) {
+    static String sha256(@NotNull String data, String charsetName) {
         try {
             MessageDigest digest = MessageDigest.getInstance("SHA-256");
             digest.update(data.getBytes(charsetName));
@@ -59,8 +59,8 @@ public class HashUtils {
      * @param bytes the bytes to encodeHex.
      * @return the hexadecimal representation.
      */
-    @NonNull
-    private static String encodeHex(@NonNull byte[] bytes) {
+    @NotNull
+    private static String encodeHex(@NotNull byte[] bytes) {
         char[] output = new char[bytes.length * 2];
         for (int j = 0; j < bytes.length; j++) {
             int v = bytes[j] & 0xFF;

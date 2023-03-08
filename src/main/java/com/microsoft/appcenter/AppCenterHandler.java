@@ -5,8 +5,8 @@
 
 package com.microsoft.appcenter;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 /**
  * Handler abstraction to share between core and services.
@@ -19,5 +19,5 @@ public interface AppCenterHandler {
      * @param runnable         command to run if App Center is enabled.
      * @param disabledRunnable optional alternate command to run if App Center is disabled.
      */
-    void post(@NonNull Runnable runnable, @Nullable Runnable disabledRunnable);
+    void post(@NotNull Runnable runnable, @Nullable Runnable disabledRunnable);
 }

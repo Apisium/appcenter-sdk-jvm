@@ -5,8 +5,8 @@
 
 package com.microsoft.appcenter.channel;
 
-import androidx.annotation.IntRange;
-import androidx.annotation.NonNull;
+//import org.jetbrains.annotations.IntRange;
+import org.jetbrains.annotations.NotNull;
 
 import com.microsoft.appcenter.ingestion.Ingestion;
 import com.microsoft.appcenter.ingestion.models.Log;
@@ -25,7 +25,7 @@ public interface Channel {
      *
      * @param appSecret app secret.
      */
-    void setAppSecret(@NonNull String appSecret);
+    void setAppSecret(@NotNull String appSecret);
 
     /**
      * Set maximum SQLite database size.
@@ -77,9 +77,10 @@ public interface Channel {
      * @param groupName the group to use.
      * @param flags     the flags for this log.
      */
-    void enqueue(@NonNull Log log,
-                 @NonNull String groupName,
-                 @IntRange(from = NORMAL, to = CRITICAL) int flags);
+    void enqueue(@NotNull Log log,
+                 @NotNull String groupName,
+//                 @IntRange(from = NORMAL, to = CRITICAL)
+                 int flags);
 
     /**
      * Check whether channel is enabled or disabled.
@@ -152,14 +153,14 @@ public interface Channel {
          * @param groupName     group name.
          * @param groupListener group listener.
          */
-        void onGroupAdded(@NonNull String groupName, GroupListener groupListener, long batchTimeInterval);
+        void onGroupAdded(@NotNull String groupName, GroupListener groupListener, long batchTimeInterval);
 
         /**
          * Called whenever a new group is removed.
          *
          * @param groupName group name.
          */
-        void onGroupRemoved(@NonNull String groupName);
+        void onGroupRemoved(@NotNull String groupName);
 
         /**
          * Called whenever a log is being prepared.
@@ -170,7 +171,7 @@ public interface Channel {
          * @param groupName group of the log.
          */
         @SuppressWarnings("unused")
-        void onPreparingLog(@NonNull Log log, @NonNull String groupName);
+        void onPreparingLog(@NotNull Log log, @NotNull String groupName);
 
         /**
          * Called after a log has been fully prepared and properties are now final.
@@ -179,7 +180,7 @@ public interface Channel {
          * @param groupName group of the log.
          * @param flags     log flags.
          */
-        void onPreparedLog(@NonNull Log log, @NonNull String groupName, int flags);
+        void onPreparedLog(@NotNull Log log, @NotNull String groupName, int flags);
 
         /**
          * Called after a log has been fully prepared and properties are now final.
@@ -188,7 +189,7 @@ public interface Channel {
          * @param log log to filter out.
          * @return true to filter out the log, false to let it being stored and sent by the channel.
          */
-        boolean shouldFilter(@NonNull Log log);
+        boolean shouldFilter(@NotNull Log log);
 
         /**
          * Called after channel state has changed.
@@ -202,7 +203,7 @@ public interface Channel {
          *
          * @param groupName The group name.
          */
-        void onClear(@NonNull String groupName);
+        void onClear(@NotNull String groupName);
 
         /**
          * Called when a group is paused.
@@ -210,7 +211,7 @@ public interface Channel {
          * @param groupName   The group name.
          * @param targetToken The target token is paused, or null when the entire group is paused.
          */
-        void onPaused(@NonNull String groupName, String targetToken);
+        void onPaused(@NotNull String groupName, String targetToken);
 
         /**
          * Called when a group is resumed.
@@ -218,7 +219,7 @@ public interface Channel {
          * @param groupName   The group name.
          * @param targetToken The target token is resumed, or null when the entire group is resumed.
          */
-        void onResumed(@NonNull String groupName, String targetToken);
+        void onResumed(@NotNull String groupName, String targetToken);
     }
 
     /**

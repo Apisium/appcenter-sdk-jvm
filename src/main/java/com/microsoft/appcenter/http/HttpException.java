@@ -5,7 +5,7 @@
 
 package com.microsoft.appcenter.http;
 
-import androidx.annotation.NonNull;
+import org.jetbrains.annotations.NotNull;
 //import android.text.TextUtils;
 
 import java.io.IOException;
@@ -25,13 +25,13 @@ public class HttpException extends IOException {
      *
      * @param httpResponse The HTTP response.
      */
-    public HttpException(@NonNull HttpResponse httpResponse) {
+    public HttpException(@NotNull HttpResponse httpResponse) {
         super(getDetailMessage(httpResponse.getStatusCode(), httpResponse.getPayload()));
         mHttpResponse = httpResponse;
     }
 
-    @NonNull
-    private static String getDetailMessage(int status, @NonNull String payload) {
+    @NotNull
+    private static String getDetailMessage(int status, @NotNull String payload) {
         if (payload.isEmpty()) {
             return String.valueOf(status);
         }

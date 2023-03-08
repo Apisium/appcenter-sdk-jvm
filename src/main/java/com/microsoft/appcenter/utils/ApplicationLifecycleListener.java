@@ -21,8 +21,8 @@ import android.app.Activity;
 import android.app.Application.ActivityLifecycleCallbacks;
 import android.os.Bundle;
 import android.os.Handler;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.Set;
 import java.util.concurrent.CopyOnWriteArraySet;
@@ -113,11 +113,11 @@ public class ApplicationLifecycleListener implements ActivityLifecycleCallbacks 
     }
 
     @Override
-    public void onActivityCreated(@NonNull Activity activity, @Nullable Bundle savedInstanceState) {
+    public void onActivityCreated(@NotNull Activity activity, @Nullable Bundle savedInstanceState) {
     }
 
     @Override
-    public void onActivityStarted(@NonNull Activity activity) {
+    public void onActivityStarted(@NotNull Activity activity) {
         mStartedCounter++;
         if (mStartedCounter == 1 && mStopSent) {
             for (ApplicationLifecycleCallbacks service : mLifecycleCallbacks) {
@@ -128,7 +128,7 @@ public class ApplicationLifecycleListener implements ActivityLifecycleCallbacks 
     }
 
     @Override
-    public void onActivityResumed(@NonNull Activity activity) {
+    public void onActivityResumed(@NotNull Activity activity) {
         mResumedCounter++;
         if (mResumedCounter == 1) {
             if (mPauseSent) {
@@ -140,7 +140,7 @@ public class ApplicationLifecycleListener implements ActivityLifecycleCallbacks 
     }
 
     @Override
-    public void onActivityPaused(@NonNull Activity activity) {
+    public void onActivityPaused(@NotNull Activity activity) {
 
         /*
          * If the SDK starts from onStart or onResume, the first onActivityStarted/onActivityResumed isn't called.
@@ -166,17 +166,17 @@ public class ApplicationLifecycleListener implements ActivityLifecycleCallbacks 
     }
 
     @Override
-    public void onActivityStopped(@NonNull Activity activity) {
+    public void onActivityStopped(@NotNull Activity activity) {
         mStartedCounter = max(mStartedCounter - 1, 0);
         dispatchStopIfNeeded();
     }
 
     @Override
-    public void onActivitySaveInstanceState(@NonNull Activity activity, @NonNull Bundle outState) {
+    public void onActivitySaveInstanceState(@NotNull Activity activity, @NotNull Bundle outState) {
     }
 
     @Override
-    public void onActivityDestroyed(@NonNull Activity activity) {
+    public void onActivityDestroyed(@NotNull Activity activity) {
     }
 
     public interface ApplicationLifecycleCallbacks extends ActivityLifecycleCallbacks {

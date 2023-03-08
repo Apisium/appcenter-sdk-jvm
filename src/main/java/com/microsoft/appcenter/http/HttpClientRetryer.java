@@ -7,7 +7,7 @@ package com.microsoft.appcenter.http;
 
 import android.os.Handler;
 import android.os.Looper;
-import androidx.annotation.VisibleForTesting;
+import org.jetbrains.annotations.VisibleForTesting;
 
 import com.microsoft.appcenter.AppCenter;
 import com.microsoft.appcenter.utils.AppCenterLog;

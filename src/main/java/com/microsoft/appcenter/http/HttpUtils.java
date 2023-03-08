@@ -7,8 +7,8 @@ package com.microsoft.appcenter.http;
 
 import android.content.Context;
 //import android.os.Build;
-import androidx.annotation.NonNull;
-import androidx.annotation.VisibleForTesting;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.VisibleForTesting;
 
 //import com.microsoft.appcenter.utils.NetworkStateHelper;
 
@@ -143,7 +143,7 @@ public class HttpUtils {
      * @param secret like an app secret or a bearer token.
      * @return obfuscated secret.
      */
-    public static String hideSecret(@NonNull String secret) {
+    public static String hideSecret(@NotNull String secret) {
 
         /* Hide secret if string is neither null nor empty string. */
         int hidingEndIndex = secret.length() - (secret.length() >= MAX_CHARACTERS_DISPLAYED_FOR_SECRET ? MAX_CHARACTERS_DISPLAYED_FOR_SECRET : 0);
@@ -158,7 +158,7 @@ public class HttpUtils {
      * @param apiKeys api keys string header value.
      * @return obfuscated api keys or the original string as is if the format does not match.
      */
-    public static String hideApiKeys(@NonNull String apiKeys) {
+    public static String hideApiKeys(@NotNull String apiKeys) {
 
         /* Replace all secret parts. */
         StringBuilder buffer = new StringBuilder();
@@ -184,21 +184,21 @@ public class HttpUtils {
      * @param tickets tickets string header value.
      * @return obfuscated tickets or the original string as is if the format does not match.
      */
-    public static String hideTickets(@NonNull String tickets) {
+    public static String hideTickets(@NotNull String tickets) {
         return TOKEN_VALUE_PATTERN.matcher(tickets).replaceAll(":***");
     }
 
-    public static HttpClient createHttpClient(@NonNull Context context) {
+    public static HttpClient createHttpClient(@NotNull Context context) {
         return createHttpClient(context, true);
     }
 
-    public static HttpClient createHttpClient(@NonNull Context context, boolean compressionEnabled) {
+    public static HttpClient createHttpClient(@NotNull Context context, boolean compressionEnabled) {
 
         /* Retryer should be applied last to avoid retries in offline. */
         return new HttpClientRetryer(createHttpClientWithoutRetryer(context, compressionEnabled));
     }
 
-    public static HttpClient createHttpClientWithoutRetryer(@NonNull Context context, boolean compressionEnabled) {
+    public static HttpClient createHttpClientWithoutRetryer(@NotNull Context context, boolean compressionEnabled) {
         HttpClient httpClient = new DefaultHttpClient(compressionEnabled);
 //        NetworkStateHelper networkStateHelper = NetworkStateHelper.getSharedInstance(context);
         httpClient = new HttpClientNetworkStateHandler(httpClient);
@@ -212,8 +212,8 @@ public class HttpUtils {
      * @return instance of {@link HttpsURLConnection}.
      * @throws IOException if connection fails.
      */
-    @NonNull
-    public static HttpsURLConnection createHttpsConnection(@NonNull URL url) throws IOException {
+    @NotNull
+    public static HttpsURLConnection createHttpsConnection(@NotNull URL url) throws IOException {
         if (!"https".equals(url.getProtocol())) {
             throw new IOException("App Center support only HTTPS connection.");
         }

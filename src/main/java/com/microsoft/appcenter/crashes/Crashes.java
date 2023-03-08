@@ -9,10 +9,10 @@ package com.microsoft.appcenter.crashes;
 //import android.content.ComponentCallbacks2;
 import android.content.Context;
 //import android.content.res.Configuration;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.annotation.VisibleForTesting;
-import androidx.annotation.WorkerThread;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.VisibleForTesting;
+//import org.jetbrains.annotations.WorkerThread;
 
 import com.microsoft.appcenter.AbstractAppCenterService;
 import com.microsoft.appcenter.Constants;
@@ -224,7 +224,7 @@ public class Crashes extends AbstractAppCenterService {
         mErrorReportCache = new LinkedHashMap<>();
     }
 
-    @NonNull
+    @NotNull
     public static synchronized Crashes getInstance() {
         if (sInstance == null) {
             sInstance = new Crashes();
@@ -265,7 +265,7 @@ public class Crashes extends AbstractAppCenterService {
      * @param throwable The throwable describing the handled error.
      */
     @SuppressWarnings({"SameParameterValue", "WeakerAccess"})
-    public static void trackError(@NonNull Throwable throwable) {
+    public static void trackError(@NotNull Throwable throwable) {
         trackError(throwable, null, null);
     }
 
@@ -281,7 +281,7 @@ public class Crashes extends AbstractAppCenterService {
      * @param properties  Optional properties.
      * @param attachments Optional attachments.
      */
-    public static void trackError(@NonNull Throwable throwable, Map<String, String> properties, Iterable<ErrorAttachmentLog> attachments) {
+    public static void trackError(@NotNull Throwable throwable, Map<String, String> properties, Iterable<ErrorAttachmentLog> attachments) {
         getInstance().queueException(throwable, properties, attachments);
     }
 
@@ -430,7 +430,7 @@ public class Crashes extends AbstractAppCenterService {
 //                }
 //
 //                @Override
-//                public void onConfigurationChanged(@NonNull Configuration newConfig) {
+//                public void onConfigurationChanged(@NotNull Configuration newConfig) {
 //                }
 //
 //                @Override
@@ -463,7 +463,7 @@ public class Crashes extends AbstractAppCenterService {
 //    }
 
     @Override
-    public synchronized void onStarted(@NonNull Context context, @NonNull Channel channel, String appSecret, String transmissionTargetToken, boolean startedFromApp) {
+    public synchronized void onStarted(@NotNull Context context, @NotNull Channel channel, String appSecret, String transmissionTargetToken, boolean startedFromApp) {
         mContext = context;
         if (!isInstanceEnabled()) {
 
@@ -604,7 +604,7 @@ public class Crashes extends AbstractAppCenterService {
      * @param properties  optional properties.
      * @param attachments optional attachments.
      */
-    private synchronized void queueException(@NonNull final Throwable throwable, Map<String, String> properties, Iterable<ErrorAttachmentLog> attachments) {
+    private synchronized void queueException(@NotNull final Throwable throwable, Map<String, String> properties, Iterable<ErrorAttachmentLog> attachments) {
         queueException(new ExceptionModelBuilder() {
 
             @Override
@@ -622,7 +622,7 @@ public class Crashes extends AbstractAppCenterService {
      * @param attachments    optional attachments.
      * @return handled error ID.
      */
-    synchronized UUID queueException(@NonNull final Exception modelException, Map<String, String> properties, Iterable<ErrorAttachmentLog> attachments) {
+    synchronized UUID queueException(@NotNull final Exception modelException, Map<String, String> properties, Iterable<ErrorAttachmentLog> attachments) {
         return queueException(new ExceptionModelBuilder() {
 
             @Override
@@ -632,7 +632,7 @@ public class Crashes extends AbstractAppCenterService {
         }, properties, attachments);
     }
 
-    private synchronized UUID queueException(@NonNull final ExceptionModelBuilder exceptionModelBuilder, Map<String, String> properties, final Iterable<ErrorAttachmentLog> attachments) {
+    private synchronized UUID queueException(@NotNull final ExceptionModelBuilder exceptionModelBuilder, Map<String, String> properties, final Iterable<ErrorAttachmentLog> attachments) {
 
         /* Snapshot userId as early as possible. */
         final String userId = UserIdContext.getInstance().getUserId();
@@ -1066,7 +1066,7 @@ public class Crashes extends AbstractAppCenterService {
     /**
      * Send error attachment logs through channel.
      */
-    @WorkerThread
+//    @WorkerThread
     private void sendErrorAttachment(UUID errorId, Iterable<ErrorAttachmentLog> attachments) {
         if (attachments == null) {
             AppCenterLog.debug(LOG_TAG, "Error report: " + errorId.toString() + " does not have any attachment.");
@@ -1146,7 +1146,7 @@ public class Crashes extends AbstractAppCenterService {
         return saveErrorLogFiles(throwable, errorLog);
     }
 
-    @NonNull
+    @NotNull
     private UUID saveErrorLogFiles(Throwable throwable, ManagedErrorLog errorLog) throws JSONException, IOException {
         File errorStorageDirectory = ErrorLogHelper.getErrorStorageDirectory();
         UUID errorLogId = errorLog.getId();
@@ -1222,7 +1222,7 @@ public class Crashes extends AbstractAppCenterService {
     /**
      * Implementation of {@link WrapperSdkExceptionManager#sendErrorAttachments(String, Iterable)}.
      */
-    @WorkerThread
+//    @WorkerThread
     void sendErrorAttachments(final String errorReportId, final Iterable<ErrorAttachmentLog> attachments) {
         post(new Runnable() {
 
@@ -1244,7 +1244,7 @@ public class Crashes extends AbstractAppCenterService {
         });
     }
 
-    @WorkerThread
+//    @WorkerThread
     private static void saveMemoryRunningLevel(int level) {
         SharedPreferencesManager.putInt(PREF_KEY_MEMORY_RUNNING_LEVEL, level);
         AppCenterLog.debug(LOG_TAG, String.format("The memory running level (%s) was saved.", level));

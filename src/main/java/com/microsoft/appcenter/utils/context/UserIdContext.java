@@ -5,8 +5,8 @@
 
 package com.microsoft.appcenter.utils.context;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.VisibleForTesting;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.VisibleForTesting;
 //import android.text.TextUtils;
 
 import com.microsoft.appcenter.utils.AppCenterLog;
@@ -31,7 +31,7 @@ public class UserIdContext {
     /**
      * Maximum allowed length for user identifier for App Center server.
      */
-    @VisibleForTesting
+//    @VisibleForTesting
     public static final int USER_ID_APP_CENTER_MAX_LENGTH = 256;
 
     /**
@@ -126,7 +126,7 @@ public class UserIdContext {
      *
      * @param listener listener to be notified of changes.
      */
-    public void addListener(@NonNull Listener listener) {
+    public void addListener(@NotNull Listener listener) {
         mListeners.add(listener);
     }
 
@@ -135,7 +135,7 @@ public class UserIdContext {
      *
      * @param listener listener to be removed.
      */
-    public void removeListener(@NonNull Listener listener) {
+    public void removeListener(@NotNull Listener listener) {
         mListeners.remove(listener);
     }
 

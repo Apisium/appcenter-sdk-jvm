@@ -6,9 +6,9 @@
 package com.microsoft.appcenter;
 
 import android.content.Context;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.annotation.WorkerThread;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+//import org.jetbrains.annotations.WorkerThread;
 
 import com.microsoft.appcenter.channel.Channel;
 import com.microsoft.appcenter.ingestion.models.json.LogFactory;
@@ -64,7 +64,7 @@ public interface AppCenterService extends ApplicationLifecycleListener.Applicati
      * @param handler background thread handler.
      */
     @SuppressWarnings("JavadocReference")
-    void onStarting(@NonNull AppCenterHandler handler);
+    void onStarting(@NotNull AppCenterHandler handler);
 
     /**
      * Called when the service is started (disregarding if enabled or disabled).
@@ -75,8 +75,8 @@ public interface AppCenterService extends ApplicationLifecycleListener.Applicati
      * @param transmissionTargetToken transmission target token.
      * @param startedFromApp          true if started from app, false if started from a library.
      */
-    @WorkerThread
-    void onStarted(@NonNull Context context, @NonNull Channel channel, String appSecret, String transmissionTargetToken, boolean startedFromApp);
+//    @WorkerThread
+    void onStarted(@NotNull Context context, @NotNull Channel channel, String appSecret, String transmissionTargetToken, boolean startedFromApp);
 
     /**
      * Called when service started from library without any secret and then the app starts the service again
@@ -85,6 +85,6 @@ public interface AppCenterService extends ApplicationLifecycleListener.Applicati
      * @param appSecret               application secret.
      * @param transmissionTargetToken transmission target token.
      */
-    @WorkerThread
+//    @WorkerThread
     void onConfigurationUpdated(@SuppressWarnings("unused") String appSecret, @SuppressWarnings("unused") String transmissionTargetToken);
 }

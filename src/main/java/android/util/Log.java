@@ -14,10 +14,10 @@
  * limitations under the License.
  */
 package android.util;
-import androidx.annotation.IntDef;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-//import androidx.annotation.SystemApi;
+//import org.jetbrains.annotations.IntDef;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+//import org.jetbrains.annotations.SystemApi;
 //import android.compat.annotation.UnsupportedAppUsage;
 //import android.os.DeadSystemException;
 //import com.android.internal.os.RuntimeInit;
@@ -68,7 +68,7 @@ import java.net.UnknownHostException;
  */
 public final class Log {
     /** @hide */
-    @IntDef({ASSERT, ERROR, WARN, INFO, DEBUG, VERBOSE})
+//    @IntDef({ASSERT, ERROR, WARN, INFO, DEBUG, VERBOSE})
     @Retention(RetentionPolicy.SOURCE)
     public @interface Level {}
     /**
@@ -124,7 +124,7 @@ public final class Log {
      * @param msg The message you would like logged.
      * @return A positive value if the message was loggable (see {@link #isLoggable}).
      */
-    public static int v(@Nullable String tag, @NonNull String msg) {
+    public static int v(@Nullable String tag, @NotNull String msg) {
         return println_native(LOG_ID_MAIN, VERBOSE, tag, msg);
     }
     /**
@@ -145,7 +145,7 @@ public final class Log {
      * @param msg The message you would like logged.
      * @return A positive value if the message was loggable (see {@link #isLoggable}).
      */
-    public static int d(@Nullable String tag, @NonNull String msg) {
+    public static int d(@Nullable String tag, @NotNull String msg) {
         return println_native(LOG_ID_MAIN, DEBUG, tag, msg);
     }
     /**
@@ -166,7 +166,7 @@ public final class Log {
      * @param msg The message you would like logged.
      * @return A positive value if the message was loggable (see {@link #isLoggable}).
      */
-    public static int i(@Nullable String tag, @NonNull String msg) {
+    public static int i(@Nullable String tag, @NotNull String msg) {
         return println_native(LOG_ID_MAIN, INFO, tag, msg);
     }
     /**
@@ -186,7 +186,7 @@ public final class Log {
      * @param msg The message you would like logged.
      * @return A positive value if the message was loggable (see {@link #isLoggable}).
      */
-    public static int w(@Nullable String tag, @NonNull String msg) {
+    public static int w(@Nullable String tag, @NotNull String msg) {
         return println_native(LOG_ID_MAIN, WARN, tag, msg);
     }
     /**
@@ -238,7 +238,7 @@ public final class Log {
      * @param msg The message you would like logged.
      * @return A positive value if the message was loggable (see {@link #isLoggable}).
      */
-    public static int e(@Nullable String tag, @NonNull String msg) {
+    public static int e(@Nullable String tag, @NotNull String msg) {
         return println_native(LOG_ID_MAIN, ERROR, tag, msg);
     }
     /**
@@ -256,7 +256,7 @@ public final class Log {
      * What a Terrible Failure: Report a condition that should never happen.
      * The error will always be logged at level ASSERT with the call stack.
      * Depending on system configuration, a report may be added to the
-     * {@link android.os.DropBoxManager} and/or the process may be terminated
+//     * {@link android.os.DropBoxManager} and/or the process may be terminated
      * immediately with an error dialog.
      * @param tag Used to identify the source of a log message.
      * @param msg The message you would like logged.
@@ -280,7 +280,7 @@ public final class Log {
      * @param tr An exception to log.
      * @return A positive value if the message was loggable (see {@link #isLoggable}).
      */
-    public static int wtf(@Nullable String tag, @NonNull Throwable tr) {
+    public static int wtf(@Nullable String tag, @NotNull Throwable tr) {
         return wtf(LOG_ID_MAIN, tag, tr.getMessage(), tr, false, false);
     }
     /**
@@ -316,8 +316,8 @@ public final class Log {
      *
      * @hide
      */
-    @NonNull
-    public static TerribleFailureHandler setWtfHandler(@NonNull TerribleFailureHandler handler) {
+    @NotNull
+    public static TerribleFailureHandler setWtfHandler(@NotNull TerribleFailureHandler handler) {
         if (handler == null) {
             throw new NullPointerException("handler == null");
         }
@@ -331,7 +331,7 @@ public final class Log {
      * this returns an empty string.
      * @param tr An exception to log.
      */
-    @NonNull
+    @NotNull
     public static String getStackTraceString(@Nullable Throwable tr) {
         if (tr == null) {
             return "";
@@ -359,7 +359,7 @@ public final class Log {
      * @param msg The message you would like logged.
      * @return A positive value if the message was loggable (see {@link #isLoggable}).
      */
-    public static int println(@Level int priority, @Nullable String tag, @NonNull String msg) {
+    public static int println(@Level int priority, @Nullable String tag, @NotNull String msg) {
         return println_native(LOG_ID_MAIN, priority, tag, msg);
     }
     /** @hide */ public static final int LOG_ID_MAIN = 0;
@@ -416,7 +416,7 @@ public final class Log {
      * @return A positive value if the message was loggable (see {@link #isLoggable}).
      * @hide
      */
-    public static int printlns(int bufID, int priority, @Nullable String tag, @NonNull String msg,
+    public static int printlns(int bufID, int priority, @Nullable String tag, @NotNull String msg,
                                @Nullable Throwable tr) {
         ImmediateLogWriter logWriter = new ImmediateLogWriter(bufID, priority, tag);
         // Acceptable buffer size. Get the native buffer size, subtract two zero terminators,
