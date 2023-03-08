@@ -30,6 +30,8 @@ import com.microsoft.appcenter.utils.storage.FileManager;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.json.JSONStringer;
+import oshi.SystemInfo;
+import oshi.software.os.OSProcess;
 
 import java.io.File;
 import java.io.FilenameFilter;
@@ -188,8 +190,8 @@ public class ErrorLogHelper {
 //                }
 //            }
 //        }
-        errorLog.setProcessId((int) ProcessHandle.current().pid());
-        errorLog.setProcessName(ProcessHandle.current().info().commandLine().orElse(""));
+
+        setProcessInfo(errorLog);
 
         /*
          * Process name is required field for crash processing but cannot always be available,
@@ -697,5 +699,19 @@ public class ErrorLogHelper {
         sNewMinidumpDirectory = null;
         sErrorLogDirectory = null;
         sPendingMinidumpDirectory = null;
+    }
+
+    // ------------------------------------------------------------------------
+    private static int PID = -1;
+    private static String PROCESS_NAME;
+
+    private static void setProcessInfo(ManagedErrorLog log) {
+        if (PROCESS_NAME == null) {
+            OSProcess process = new SystemInfo().getOperatingSystem().getCurrentProcess();
+            PID = process.getProcessID();
+            PROCESS_NAME = process.getName();
+        }
+        log.setProcessId(PID);
+        log.setProcessName(PROCESS_NAME);
     }
 }

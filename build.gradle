@@ -1,24 +1,15 @@
 plugins {
     id 'java'
-    id 'maven-publish'
 }
 
-sourceCompatibility = JavaVersion.VERSION_11
-targetCompatibility = JavaVersion.VERSION_11
+sourceCompatibility = JavaVersion.VERSION_1_8
+targetCompatibility = JavaVersion.VERSION_1_8
 
 group 'com.microsoft.appcenter'
 version '1.0.0'
 
 java {
     withSourcesJar()
-}
-
-publishing {
-    publications {
-        maven(MavenPublication) {
-            from components.java
-        }
-    }
 }
 
 repositories {
