@@ -84,7 +84,7 @@ public class DeviceInfoHelper {
 //            TelephonyManager telephonyManager = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
 //            String networkCountryIso = telephonyManager.getNetworkCountryIso();
 //            if (!TextUtils.isEmpty(networkCountryIso)) {
-//                device.setCarrierCountry(networkCountryIso);
+                device.setCarrierCountry(Locale.getDefault().getCountry());
 //            }
 //            String networkOperatorName = telephonyManager.getNetworkOperatorName();
 //            if (!TextUtils.isEmpty(networkOperatorName)) {

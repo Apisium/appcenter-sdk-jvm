@@ -10,7 +10,7 @@ import android.app.Application;
 import android.content.Context;
 //import android.os.Bundle;
 import android.os.Handler;
-import android.os.HandlerThread;
+//import android.os.HandlerThread;
 import android.os.Looper;
 import androidx.annotation.IntRange;
 import androidx.annotation.VisibleForTesting;
@@ -738,7 +738,7 @@ public class AppCenter {
         mHandler = new Handler(Looper.getMainLooper());
         mAppCenterHandler = this::handlerAppCenterOperation;
         mApplicationLifecycleListener = new ApplicationLifecycleListener(mHandler);
-//        mApplication.registerActivityLifecycleCallbacks(mApplicationLifecycleListener);
+        mApplication.registerActivityLifecycleCallbacks(mApplicationLifecycleListener);
 
         /* The rest of initialization is done in background as we need storage. */
         mServices = new HashSet<>();
@@ -995,7 +995,7 @@ public class AppCenter {
 //        } else {
             serviceInstance.onStarting(mAppCenterHandler);
             mApplicationLifecycleListener.registerApplicationLifecycleCallbacks(serviceInstance);
-//            mApplication.registerActivityLifecycleCallbacks(serviceInstance);
+            mApplication.registerActivityLifecycleCallbacks(serviceInstance);
             mServices.add(serviceInstance);
             startedServices.add(serviceInstance);
             return true;

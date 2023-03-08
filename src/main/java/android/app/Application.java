@@ -3,9 +3,19 @@ package android.app;
 import android.content.Context;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.os.Bundle;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import static android.os.AsyncTask.THREAD_POOL_EXECUTOR;
 
 public class Application extends Context {
+    private boolean started = false;
     private final PackageManager packageManager;
+    private final Activity activity = new Activity();
+    private final Bundle bundle = new Bundle();
+    private final List<ActivityLifecycleCallbacks> activityLifecycleCallbacks = new ArrayList<>();
     private Application(PackageInfo packageInfo) {
         packageManager = new PackageManager(packageInfo);
     }
@@ -22,5 +32,39 @@ public class Application extends Context {
 
     public static Application getApplication(String packageName, int versionCode, String versionName) {
         return new Application(new PackageInfo(packageName, versionCode, versionName));
+    }
+
+    public void registerActivityLifecycleCallbacks(ActivityLifecycleCallbacks callback) {
+        activityLifecycleCallbacks.add(callback);
+    }
+
+    public void start() {
+        if (started) return;
+        started = true;
+        for (ActivityLifecycleCallbacks callback : activityLifecycleCallbacks) {
+            callback.onActivityCreated(activity, bundle);
+            callback.onActivityStarted(activity);
+            callback.onActivityResumed(activity);
+        }
+    }
+
+    public void close() {
+        if (!started) return;
+        THREAD_POOL_EXECUTOR.shutdown();
+        for (ActivityLifecycleCallbacks callback : activityLifecycleCallbacks) {
+            callback.onActivityPaused(activity);
+            callback.onActivityStopped(activity);
+            callback.onActivityDestroyed(activity);
+        }
+    }
+
+    public interface ActivityLifecycleCallbacks {
+        void onActivityCreated(Activity activity, Bundle savedInstanceState);
+        void onActivityStarted(Activity activity);
+        void onActivityResumed(Activity activity);
+        void onActivityPaused(Activity activity);
+        void onActivityStopped(Activity activity);
+        void onActivitySaveInstanceState(Activity activity, Bundle outState);
+        void onActivityDestroyed(Activity activity);
     }
 }

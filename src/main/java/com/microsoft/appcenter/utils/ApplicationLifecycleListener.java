@@ -17,9 +17,9 @@
 
 package com.microsoft.appcenter.utils;
 
-//import android.app.Activity;
-//import android.app.Application.ActivityLifecycleCallbacks;
-//import android.os.Bundle;
+import android.app.Activity;
+import android.app.Application.ActivityLifecycleCallbacks;
+import android.os.Bundle;
 import android.os.Handler;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -38,7 +38,7 @@ import static java.lang.Math.max;
  * This is a simplified version of androidx.lifecycle.ProcessLifecycleOwner class:
  * https://developer.android.com/reference/androidx/lifecycle/ProcessLifecycleOwner
  */
-public class ApplicationLifecycleListener {
+public class ApplicationLifecycleListener implements ActivityLifecycleCallbacks {
 
     /**
      * The timeout used to determine an actual transition to the background.
@@ -112,74 +112,74 @@ public class ApplicationLifecycleListener {
         }
     }
 
-//    @Override
-//    public void onActivityCreated(@NonNull Activity activity, @Nullable Bundle savedInstanceState) {
-//    }
-//
-//    @Override
-//    public void onActivityStarted(@NonNull Activity activity) {
-//        mStartedCounter++;
-//        if (mStartedCounter == 1 && mStopSent) {
-//            for (ApplicationLifecycleCallbacks service : mLifecycleCallbacks) {
-//                service.onApplicationEnterForeground();
-//            }
-//            mStopSent = false;
-//        }
-//    }
-//
-//    @Override
-//    public void onActivityResumed(@NonNull Activity activity) {
-//        mResumedCounter++;
-//        if (mResumedCounter == 1) {
-//            if (mPauseSent) {
-//                mPauseSent = false;
-//            } else {
-//                mHandler.removeCallbacks(mDelayedPauseRunnable);
-//            }
-//        }
-//    }
-//
-//    @Override
-//    public void onActivityPaused(@NonNull Activity activity) {
-//
-//        /*
-//         * If the SDK starts from onStart or onResume, the first onActivityStarted/onActivityResumed isn't called.
-//         * This breaks the flags logic and we need to restore their state.
-//         */
-//        if (mStartedCounter == 0) {
-//            mStopSent = false;
-//        }
-//        if (mResumedCounter == 0) {
-//            mPauseSent = false;
-//        }
-//        mResumedCounter = max(mResumedCounter - 1, 0);
-//        if (mResumedCounter == 0) {
-//
-//            /*
-//             * OnPause and onStop events will be dispatched with a delay after a last activity
-//             * passed through them. This delay is long enough to guarantee that
-//             * ApplicationLifecycleListener won't send any events if activities are destroyed
-//             * and recreated due to a configuration change.
-//             */
-//            mHandler.postDelayed(mDelayedPauseRunnable, TIMEOUT_MS);
-//        }
-//    }
-//
-//    @Override
-//    public void onActivityStopped(@NonNull Activity activity) {
-//        mStartedCounter = max(mStartedCounter - 1, 0);
-//        dispatchStopIfNeeded();
-//    }
-//
-//    @Override
-//    public void onActivitySaveInstanceState(@NonNull Activity activity, @NonNull Bundle outState) {
-//    }
-//
-//    @Override
-//    public void onActivityDestroyed(@NonNull Activity activity) {
-//    }
+    @Override
+    public void onActivityCreated(@NonNull Activity activity, @Nullable Bundle savedInstanceState) {
+    }
 
-    public interface ApplicationLifecycleCallbacks {
+    @Override
+    public void onActivityStarted(@NonNull Activity activity) {
+        mStartedCounter++;
+        if (mStartedCounter == 1 && mStopSent) {
+            for (ApplicationLifecycleCallbacks service : mLifecycleCallbacks) {
+                service.onApplicationEnterForeground();
+            }
+            mStopSent = false;
+        }
+    }
+
+    @Override
+    public void onActivityResumed(@NonNull Activity activity) {
+        mResumedCounter++;
+        if (mResumedCounter == 1) {
+            if (mPauseSent) {
+                mPauseSent = false;
+            } else {
+//                mHandler.removeCallbacks(mDelayedPauseRunnable);
+            }
+        }
+    }
+
+    @Override
+    public void onActivityPaused(@NonNull Activity activity) {
+
+        /*
+         * If the SDK starts from onStart or onResume, the first onActivityStarted/onActivityResumed isn't called.
+         * This breaks the flags logic and we need to restore their state.
+         */
+        if (mStartedCounter == 0) {
+            mStopSent = false;
+        }
+        if (mResumedCounter == 0) {
+            mPauseSent = false;
+        }
+        mResumedCounter = max(mResumedCounter - 1, 0);
+        if (mResumedCounter == 0) {
+
+            /*
+             * OnPause and onStop events will be dispatched with a delay after a last activity
+             * passed through them. This delay is long enough to guarantee that
+             * ApplicationLifecycleListener won't send any events if activities are destroyed
+             * and recreated due to a configuration change.
+             */
+            mHandler.post(mDelayedPauseRunnable);
+        }
+    }
+
+    @Override
+    public void onActivityStopped(@NonNull Activity activity) {
+        mStartedCounter = max(mStartedCounter - 1, 0);
+        dispatchStopIfNeeded();
+    }
+
+    @Override
+    public void onActivitySaveInstanceState(@NonNull Activity activity, @NonNull Bundle outState) {
+    }
+
+    @Override
+    public void onActivityDestroyed(@NonNull Activity activity) {
+    }
+
+    public interface ApplicationLifecycleCallbacks extends ActivityLifecycleCallbacks {
 
         /**
          * Dispatched when an application enters foreground.

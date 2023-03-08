@@ -1,9 +1,13 @@
 package android.os;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.concurrent.*;
 
 public abstract class AsyncTask <Params, Progress, Result> {
-    public static final ThreadPoolExecutor THREAD_POOL_EXECUTOR = new ThreadPoolExecutor(0, 10, 1, TimeUnit.SECONDS, new LinkedBlockingQueue<>());
+    private static int id = 0;
+    public static final ThreadPoolExecutor THREAD_POOL_EXECUTOR = new ThreadPoolExecutor(0, 10,
+            1, TimeUnit.SECONDS, new LinkedBlockingQueue<>(), r -> new Thread(r, "AsyncTask-" + r.hashCode() + "-" + id++));
 
     private FutureTask<Void> task;
 
