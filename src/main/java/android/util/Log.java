@@ -390,7 +390,7 @@ public final class Log {
             case WARN: level = org.slf4j.event.Level.WARN; break;
             default: level = org.slf4j.event.Level.ERROR;
         }
-        LOGGER.atLevel(level).log("[%s] %s", tag, msg);
+        LOGGER.atLevel(level).log("[{}] {}", tag, msg);
         return 1;
     }
     /**
