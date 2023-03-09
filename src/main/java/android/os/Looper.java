@@ -35,9 +35,12 @@ public class Looper implements Executor {
 
     public void close() {
         try {
-            if (!THREAD_POOL_EXECUTOR.awaitTermination(20, TimeUnit.SECONDS)) {
-                THREAD_POOL_EXECUTOR.shutdown();
+            THREAD_POOL_EXECUTOR.shutdown();
+            if (!THREAD_POOL_EXECUTOR.awaitTermination(20, TimeUnit.MILLISECONDS)) {
+                THREAD_POOL_EXECUTOR.shutdownNow();
             }
+        } catch (InterruptedException e) {
+            THREAD_POOL_EXECUTOR.shutdownNow();
         } catch (Throwable e) {
             LOGGER.error("AsyncTask thread pool failed to shutdown.", e);
         }
