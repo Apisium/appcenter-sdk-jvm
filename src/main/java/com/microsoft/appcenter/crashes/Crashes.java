@@ -1317,9 +1317,9 @@ public class Crashes extends AbstractAppCenterService {
     }
     private synchronized void queueCrash(@NotNull final Throwable throwable, Thread thread, Iterable<ErrorAttachmentLog> attachments) {
         final UUID errorId = UUID.randomUUID();
-        ManagedErrorLog errorLog = ErrorLogHelper.createErrorLog(mContext, thread,
-                ErrorLogHelper.getModelExceptionFromThrowable(throwable), Thread.getAllStackTraces(), mInitializeTimestamp, true);
         post(() -> {
+            ManagedErrorLog errorLog = ErrorLogHelper.createErrorLog(mContext, thread,
+                    ErrorLogHelper.getModelExceptionFromThrowable(throwable), Thread.getAllStackTraces(), mInitializeTimestamp, true);
             /* First send the handled error. */
             mChannel.enqueue(errorLog, ERROR_GROUP, Flags.CRITICAL);
 

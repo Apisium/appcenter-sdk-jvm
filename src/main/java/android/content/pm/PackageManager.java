@@ -7,6 +7,6 @@ public class PackageManager {
     }
 
     public PackageInfo getPackageInfo(String packageName, int flags) {
-        return packageInfo.packageName.equals(packageName) ? packageInfo : null;
+        return packageInfo;
     }
 }

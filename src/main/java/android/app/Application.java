@@ -4,11 +4,10 @@ import android.content.Context;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.os.Looper;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import static android.os.AsyncTask.THREAD_POOL_EXECUTOR;
 
 public class Application extends Context {
     private boolean started = false;
@@ -50,12 +49,12 @@ public class Application extends Context {
 
     public void close() {
         if (!started) return;
-        THREAD_POOL_EXECUTOR.shutdown();
         for (ActivityLifecycleCallbacks callback : activityLifecycleCallbacks) {
             callback.onActivityPaused(activity);
             callback.onActivityStopped(activity);
             callback.onActivityDestroyed(activity);
         }
+        Looper.getMainLooper().close();
     }
 
     public interface ActivityLifecycleCallbacks {

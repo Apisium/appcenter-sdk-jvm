@@ -5,7 +5,7 @@
 
 package com.microsoft.appcenter.http;
 
-import android.os.AsyncTask;
+import android.os.Looper;
 import org.jetbrains.annotations.VisibleForTesting;
 
 import com.microsoft.appcenter.utils.AppCenterLog;
@@ -95,7 +95,7 @@ public class DefaultHttpClient implements HttpClient, DefaultHttpClientCallTask.
     public ServiceCall callAsync(String url, String method, Map<String, String> headers, CallTemplate callTemplate, final ServiceCallback serviceCallback) {
         final DefaultHttpClientCallTask task = new DefaultHttpClientCallTask(url, method, headers, callTemplate, serviceCallback, this, mCompressionEnabled);
         try {
-            task.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+            task.executeOnExecutor(Looper.getMainLooper());
         } catch (final RejectedExecutionException e) {
 
             /*
