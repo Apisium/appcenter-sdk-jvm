@@ -1312,10 +1312,10 @@ public class Crashes extends AbstractAppCenterService {
      * @param thread  Thread.
      * @param attachments Optional attachments.
      */
-    public static void trackCrash(@NotNull Throwable throwable, @NotNull Thread thread, @Nullable Iterable<ErrorAttachmentLog> attachments) {
-        getInstance().queueCrash(throwable, thread, attachments);
+    public static UUID trackCrash(@NotNull Throwable throwable, @NotNull Thread thread, @Nullable Iterable<ErrorAttachmentLog> attachments) {
+        return getInstance().queueCrash(throwable, thread, attachments);
     }
-    private synchronized void queueCrash(@NotNull final Throwable throwable, Thread thread, Iterable<ErrorAttachmentLog> attachments) {
+    private synchronized UUID queueCrash(@NotNull final Throwable throwable, Thread thread, Iterable<ErrorAttachmentLog> attachments) {
         final UUID errorId = UUID.randomUUID();
         post(() -> {
             ManagedErrorLog errorLog = ErrorLogHelper.createErrorLog(mContext, thread,
@@ -1326,5 +1326,6 @@ public class Crashes extends AbstractAppCenterService {
             /* Then attachments if any. */
             if (attachments != null) sendErrorAttachment(errorId, attachments);
         });
+        return errorId;
     }
 }
